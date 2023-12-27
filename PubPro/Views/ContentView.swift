@@ -11,27 +11,27 @@ import SwiftUI
 struct ContentView: View {
     
 //    let qr = QRCode(string: "1")
-    let qr = QRCode(string: "1", size: CGSize(width: 400, height: 400))
+    let qr = QRCode(string: "asdpuasndasdm", size: CGSize(width: 400, height: 400))!
 
     @State var img: Image?
     @State var showImage = false
-    
-    
+
     var body: some View {
         VStack {
             VStack {
                 if showImage {
                     img!
                         .resizable()
-                        .frame(width: 300, height: 300)
+                        //.frame(width: 300, height: 300)
                 }
             }
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("Hello")
             Button("Generate QR") {
-                let myQR: UIImage? = try? qr?.image()
+                // Q
+                let myQR: UIImage? = try? qr.image()
                 if let uiImage = myQR {
                     img = Image(uiImage: uiImage)
                 }

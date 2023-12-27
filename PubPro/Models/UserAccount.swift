@@ -8,23 +8,29 @@
 import Foundation
 import SwiftData
 
+
+/**
+ UserAccount model to store Users data an movements
+ */
 @Model
-class User {
+class UserAccount {
     var name: String
     var email: String
     var phone: String
-    var uid: String
+    var role: Role
+    @Attribute(.unique) var uid: String
     @Relationship(deleteRule: .cascade) var movements = [Movement]()
     
-    init(name: String = "", email: String = "", phone: String = "", uid: String = "") {
+    init(name: String = "", email: String = "", phone: String = "", role: Role = .unasigned, uid: String = "") {
         self.name = name
         self.email = email
         self.phone = phone
+        self.role = role
         self.uid = uid
     }
 }
 
-
+/// Extensíon used to get url of the container.
 extension ModelContext {
     var sqliteCommand: String {
         if let url = container.configurations.first?.url.path(percentEncoded: false) {
@@ -33,4 +39,16 @@ extension ModelContext {
             "No SQLite database found"
         }
     }
+}
+
+/// Users role
+enum Role: Codable {
+    case unasigned
+    case user
+    case admin
+}
+
+/// Static var for testing
+extension UserAccount {
+    static var test = UserAccount(name: "Ancel", email: "ancel@gmail.com", phone: "983983983", uid: "user1")
 }

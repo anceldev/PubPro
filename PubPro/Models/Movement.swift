@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 class Movement {
+    @Attribute(.unique) var id: UUID
     var drinkID: Int
     var points: Int
     var date: Date
@@ -19,5 +20,6 @@ class Movement {
         self.drinkID = drinkID
         self.points = points
         self.date = date
+        self.id = UUID()
     }
 }
