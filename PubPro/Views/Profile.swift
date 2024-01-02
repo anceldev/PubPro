@@ -10,10 +10,10 @@ import SwiftData
 import QRCode
 
 struct Profile: View {
-    @Environment(AuthenticationViewModel.self) var authViewModel
-//    @Environment(\.modelContext) var modelContext
-//    @Query var user: UserAccount
     
+    @Environment(AuthenticationViewModel.self) var authViewModel
+    
+    var user: User
     @State var myQR: Image?
     
     var body: some View {
@@ -22,6 +22,7 @@ struct Profile: View {
             Spacer()
             VStack{
                 Text("¡Welcome!")
+                Text(user.id ?? "No found user")
                 Text("You have 000 points")
                 
 //                if let personalQR = myQR {
@@ -49,7 +50,7 @@ struct Profile: View {
         })
     }
     func signOutAccout() {
-        authViewModel.sigOut()
+        authViewModel.signOut()
     }
     func generateQRCode() {
 //        guard let imageQR = try? QRCode(string: authViewModel.user!.providerID, size: CGSize(width: 400, height: 400))?.image() else {
@@ -60,6 +61,6 @@ struct Profile: View {
 }
 
 #Preview {
-    Profile()
+    Profile(user: User.empty)
         .environment(AuthenticationViewModel())
 }

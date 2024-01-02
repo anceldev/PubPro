@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct LoginView: View {
+    
     @Environment(AuthenticationViewModel.self) var authViewModel
     @Environment(\.dismiss) var dismiss
+    
     
     @State private var email = ""
     @State private var password = ""
@@ -46,7 +49,7 @@ struct LoginView: View {
                     .foregroundStyle(.ownDarkGray).bold()
             }
             .buttonStyle(.bordered)
-
+            
             Button("Sign up") {
                 withAnimation {
                     authViewModel.flow = .signUp
@@ -72,6 +75,7 @@ struct LoginView: View {
                 print("Authenticated in view")
                 dismiss()
             }
+            
         }
     }
     /// Sign-In with Google

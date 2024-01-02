@@ -9,13 +9,13 @@ import SwiftUI
 
 struct AuthenticatedView: View {
     
-    @Environment(AuthenticationViewModel.self) var authViewModel
+//    @State var authVM = AuthenticationViewModel()
+    @Environment(AuthenticationViewModel.self) var viewModel
     @State private var loginScreen = false
-    
     
     var body: some View {
         VStack{
-            switch authViewModel.authenticationState {
+            switch viewModel.authenticationState {
             case .unauthenticated:
                 Spacer()
                 Text("PubPro")
@@ -31,12 +31,13 @@ struct AuthenticatedView: View {
             case .authenticating:
                 ProgressView()
             case .authenticated:
-                //Profile()
                 MainView()
+//                    .environment(authVM)
             }
         }
         .sheet(isPresented: $loginScreen) {
             AuthenticationView()
+//                .environment(authVM)
         }
     }
 }

@@ -6,17 +6,14 @@
 //
 
 import Foundation
-import SwiftData
 
-@Model
-class Movement {
-    @Attribute(.unique) var id: UUID
+struct Movement: Codable{
+    var id: UUID
     var drinkID: Int
     var points: Int
     var date: Date
     
-    
-    init(drinkID: Int, points: Int, date: Date) {
+    init(drinkID: Int = 0, points: Int = 0, date: Date = .now) {
         self.drinkID = drinkID
         self.points = points
         self.date = date

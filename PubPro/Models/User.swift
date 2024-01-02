@@ -1,0 +1,36 @@
+//
+//  User.swift
+//  PubPro
+//
+//  Created by Ancel Dev account on 13/12/23.
+//
+
+import Foundation
+import FirebaseFirestore
+import FirebaseFirestoreSwift
+
+struct User: Codable, Identifiable {
+    @DocumentID var id: String?
+    var name: String
+    var email: String
+    var phone: String
+    var role: Role
+//    var movements = [Movement]()
+    
+    init(name: String = "", email: String = "", phone: String = "", role: Role = .unasigned) {
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.role = role
+    }
+}
+
+/// Users role
+enum Role: Codable {
+    case unasigned
+    case user
+    case admin
+}
+extension User {
+    static var empty = User()
+}

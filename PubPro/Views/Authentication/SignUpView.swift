@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SignUpView: View {
     
+    @Environment(\.modelContext) var modelContext
     @Environment(AuthenticationViewModel.self) var authViewModel
     @Environment(\.dismiss) var dismiss
+    
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
@@ -58,6 +61,7 @@ struct SignUpView: View {
         if password == confirmPassword {
             authViewModel.email = email
             authViewModel.password = password
+            
             Task {
                 if await authViewModel.signUpWithEmailPassword() == true {
                     dismiss()

@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
-    @Environment(AuthenticationViewModel.self) var authViewModel
+//    @Environment(AuthenticationViewModel.self) var viewModel
+    var viewModel = UserViewModel()
     
     var body: some View {
         TabView {
-            Profile()
+            Profile(user: viewModel.user)
                 .tabItem { Label("Profile", systemImage: "person") }
+//                .environment(authVM)
             HistoryView()
                 .tabItem { Label("History", systemImage: "list.bullet") }
             DrinksList()
@@ -23,10 +26,11 @@ struct MainView: View {
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gear") }
         }
+        .tint(.beerOrange)
     }
 }
 
 #Preview {
     MainView()
-        .environment(AuthenticationViewModel())
+//        .environment(AuthenticationViewModel())
 }

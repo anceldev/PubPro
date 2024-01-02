@@ -8,18 +8,24 @@
 import Foundation
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 import Observation
 import GoogleSignIn
 import GoogleSignInSwift
 
-/// Controls the authentication state
+/**
+ Controls the authentication state
+ */
 enum AuthenticationState {
     case unauthenticated
     case authenticating
     case authenticated
 }
 
-// Controls the authentication flow
+/**
+ Controls the authentication flow
+ */
 enum AuthenticationFlow {
     case login
     case signUp
@@ -27,7 +33,7 @@ enum AuthenticationFlow {
 }
 
 @Observable
-class AuthenticationViewModel {
+final class AuthenticationViewModel {
     var email = ""
     var password = ""
     var confirmPassword = ""
@@ -38,16 +44,20 @@ class AuthenticationViewModel {
     var authenticationState: AuthenticationState = .unauthenticated
     
     var errorMessage = ""
-    var user: User?
+    var user: FirebaseAuth.User?
     var displayName = ""
     
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     
+    /**
+     Constructor.
+     */
     init() {
         registerAuthStateHanlder()
     }
-    
-    /// Handles the auth state
+    /**
+     Handles the Authentication State.
+     */
     func registerAuthStateHanlder() {
         if authStateHandler == nil {
             authStateHandler = Auth.auth().addStateDidChangeListener({ auth, user in
@@ -56,14 +66,18 @@ class AuthenticationViewModel {
             })
         }
     }
-    
+    /**
+     Resets flow state and email, password and confirmPassword variables.
+     */
     func resetStates() {
         flow = .login
         email = ""
         password = ""
         confirmPassword = ""
     }
-    // MARK: - Email Password Sign-In
+    /**
+     Sign in with Email and Password
+     */
     func signInWithEmailPassword() async -> Bool {
         authenticationState = .authenticating
         print(self.email)
@@ -79,12 +93,17 @@ class AuthenticationViewModel {
             return false
         }
     }
-    
+    /**
+     Sign up with Email and Password
+     */
     func signUpWithEmailPassword() async -> Bool {
         authenticationState = .authenticating
         do {
             try await Auth.auth().createUser(withEmail: self.email, password: self.password)
             authenticationState = .authenticated
+            
+            self.createUserDocument(email: self.email)
+            
             return true
         }
         catch {
@@ -95,7 +114,10 @@ class AuthenticationViewModel {
         }
     }
     
-    func sigOut() {
+    /**
+     Sign out user account
+     */
+    func signOut() {
         do {
             try Auth.auth().signOut()
             authenticationState = .authenticated
@@ -112,6 +134,9 @@ enum AuthenticationError: Error {
     case tokenError(message: String)
 }
 extension AuthenticationViewModel {
+    /**
+     Sign in with user account using GoogleAuthentication SDK
+     */
     func signInWithGoogle() async -> Bool {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
             fatalError("No client ID found in Firebase configuration")
@@ -137,12 +162,39 @@ extension AuthenticationViewModel {
             let firebaseUser = result.user
             print("User \(firebaseUser.uid) signed in with email \(firebaseUser.email ?? "unknown")")
             authenticationState = .authenticated
+            
+            self.createUserDocument(email: userAuthentication.user.profile!.email)
+            
             return true
         }
         catch {
             print(error.localizedDescription)
             errorMessage = error.localizedDescription
             return false
+        }
+    }
+}
+extension AuthenticationViewModel {
+    /**
+     Creates new User document in Firestore database
+     */
+    func createUserDocument(email: String) {
+        let newUser = User(email: email)
+        guard let documentId = user?.uid else { return }
+        let documentRef = Firestore.firestore().collection("users").document(documentId)
+        
+        documentRef.getDocument { document, error in
+            if let document = document, document.exists {
+                print("Document exists")
+            }
+            else {
+                do {
+                    try documentRef.setData(from: newUser)
+                }
+                catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 }

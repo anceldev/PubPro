@@ -35,8 +35,8 @@ struct ForgotPassword: View {
         .padding(20)
     }
     func recoverPassword() {
-        //
         print("Call to recover password function.")
+        dismiss()
     }
 }
 
