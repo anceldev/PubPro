@@ -10,14 +10,14 @@ import SwiftData
 
 @Model
 class Drink {
-    var id: Int
+    @Attribute(.unique) var id: String
     var name: String
     var descriptionDrink: String
     var value: Int
     var lastUpdate: Date
 
     
-    init(id: Int, name: String, descriptionDrink: String, value: Int, lastUpdate: Date = .now) {
+    init(id: String = "", name: String, descriptionDrink: String, value: Int, lastUpdate: Date = .now) {
         self.id = id
         self.name = name
         self.descriptionDrink = descriptionDrink

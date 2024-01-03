@@ -16,6 +16,8 @@
 		B44C6FF42B2A42A900C8995C /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B44C6FF32B2A42A900C8995C /* AuthenticationViewModel.swift */; };
 		B454BF442B39CE8500B7C2AC /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454BF432B39CE8500B7C2AC /* UserViewModel.swift */; };
 		B454BF472B39E0B900B7C2AC /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454BF462B39E0B900B7C2AC /* Repositories.swift */; };
+		B456815F2B457C3700052953 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B456815E2B457C3700052953 /* GoogleService-Info.plist */; };
+		B45B9B4C2B44928A0029785E /* ValuesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45B9B4B2B44928A0029785E /* ValuesViewModel.swift */; };
 		B46120EE2B13E31B000EBC4D /* PubProApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46120ED2B13E31B000EBC4D /* PubProApp.swift */; };
 		B46120F02B13E31B000EBC4D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46120EF2B13E31B000EBC4D /* ContentView.swift */; };
 		B46120F22B13E31D000EBC4D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B46120F12B13E31D000EBC4D /* Assets.xcassets */; };
@@ -44,7 +46,6 @@
 		B4E505432B3209F600E8BE1F /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E505422B3209F600E8BE1F /* AuthenticationView.swift */; };
 		B4E505462B321BA200E8BE1F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B4E505452B321BA200E8BE1F /* GoogleSignIn */; };
 		B4E505482B321BA200E8BE1F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B4E505472B321BA200E8BE1F /* GoogleSignInSwift */; };
-		B4E5054A2B321C3500E8BE1F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B4E505492B321C3500E8BE1F /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,8 @@
 		B44C6FF32B2A42A900C8995C /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		B454BF432B39CE8500B7C2AC /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		B454BF462B39E0B900B7C2AC /* Repositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
+		B456815E2B457C3700052953 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B45B9B4B2B44928A0029785E /* ValuesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuesViewModel.swift; sourceTree = "<group>"; };
 		B46120EA2B13E31B000EBC4D /* PubPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PubPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B46120ED2B13E31B000EBC4D /* PubProApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PubProApp.swift; sourceTree = "<group>"; };
 		B46120EF2B13E31B000EBC4D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -74,7 +77,6 @@
 		B4BEBCAA2B30E7F80081C93C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B4BEBCAE2B30EDB40081C93C /* AuthenticatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedView.swift; sourceTree = "<group>"; };
 		B4E505422B3209F600E8BE1F /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
-		B4E505492B321C3500E8BE1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B4E5054B2B321C6500E8BE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				B46120F12B13E31D000EBC4D /* Assets.xcassets */,
-				B4E505492B321C3500E8BE1F /* GoogleService-Info.plist */,
+				B456815E2B457C3700052953 /* GoogleService-Info.plist */,
 				B46120F32B13E31D000EBC4D /* Preview Content */,
 			);
 			path = Resources;
@@ -145,6 +147,7 @@
 			children = (
 				B44C6FF32B2A42A900C8995C /* AuthenticationViewModel.swift */,
 				B454BF432B39CE8500B7C2AC /* UserViewModel.swift */,
+				B45B9B4B2B44928A0029785E /* ValuesViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -248,6 +251,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
@@ -285,7 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B46120F52B13E31D000EBC4D /* Preview Assets.xcassets in Resources */,
-				B4E5054A2B321C3500E8BE1F /* GoogleService-Info.plist in Resources */,
+				B456815F2B457C3700052953 /* GoogleService-Info.plist in Resources */,
 				B46120F22B13E31D000EBC4D /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +308,7 @@
 				B49583212B323FEE009DAAAB /* ScannerView.swift in Sources */,
 				B4BEBCAB2B30E7F80081C93C /* Profile.swift in Sources */,
 				B495831B2B3239A0009DAAAB /* DrinksList.swift in Sources */,
+				B45B9B4C2B44928A0029785E /* ValuesViewModel.swift in Sources */,
 				B454BF472B39E0B900B7C2AC /* Repositories.swift in Sources */,
 				B495831F2B323A7F009DAAAB /* SettingsView.swift in Sources */,
 				B44C6FE92B2A357900C8995C /* ForgotPassword.swift in Sources */,
@@ -457,6 +464,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PubPro/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR codes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -487,6 +495,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PubPro/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR codes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

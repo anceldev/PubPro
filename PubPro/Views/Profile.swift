@@ -11,9 +11,9 @@ import QRCode
 
 struct Profile: View {
     
-    @Environment(AuthenticationViewModel.self) var authViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     
-    var user: User
+    @State var user: User
     @State var myQR: Image?
     
     var body: some View {
@@ -22,8 +22,9 @@ struct Profile: View {
             Spacer()
             VStack{
                 Text("¡Welcome!")
-                Text(user.id ?? "No found user")
-                Text("You have 000 points")
+                Text(user.name)
+                Text("You have \(user.points) points")
+                Text("Your role is: \(user.role.rawValue)")
                 
 //                if let personalQR = myQR {
 //                    personalQR
@@ -62,5 +63,5 @@ struct Profile: View {
 
 #Preview {
     Profile(user: User.empty)
-        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
 }

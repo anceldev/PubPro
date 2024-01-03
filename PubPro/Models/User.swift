@@ -15,9 +15,10 @@ struct User: Codable, Identifiable {
     var email: String
     var phone: String
     var role: Role
-//    var movements = [Movement]()
+    var movements = [Movement]()
+    var points: Int = 0
     
-    init(name: String = "", email: String = "", phone: String = "", role: Role = .unasigned) {
+    init(name: String = "", email: String = "", phone: String = "", role: Role = .user) {
         self.name = name
         self.email = email
         self.phone = phone
@@ -26,10 +27,9 @@ struct User: Codable, Identifiable {
 }
 
 /// Users role
-enum Role: Codable {
-    case unasigned
-    case user
-    case admin
+enum Role: String, Codable {
+    case user = "User"
+    case admin = "Admin"
 }
 extension User {
     static var empty = User()

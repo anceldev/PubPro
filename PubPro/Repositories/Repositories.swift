@@ -11,28 +11,37 @@ import FirebaseFirestoreSwift
 
 @MainActor
 class Repositories {
-    private let drinksDB = Firestore.firestore().collection("drinksDB")
+    static let docReference = Firestore.firestore()
     
-//    func fetchData<T: Codable>(nameDoc doc: String) async throws -> [T] {
-//        let document = drinksDB.document(doc)
+    static func fetchUser(id: String) async throws -> User {
+        do {
+            let user = try await docReference.collection("users_v1").document(id).getDocument(as: User.self)
+            return user
+        }
+        catch {
+            print("Error fetching user document")
+            return User.empty
+        }
+    }
+    static func fetchMovements(id: String) async throws -> [Movement] {
 //        do {
-//            let document = try await document.getDocument()
-//            let dataList = try document.data(as: [T].self)
-//            return dataList
+//            let movements = try await docReference
+//                .collection("users_v1").document(id)
+//                .collection("movements").getDocuments()
 //        }
-//        catch {
-//            fatalError("Can't fetch data list")
+        return []
+    }
+    
+//    static func fetchUser(id: String) async throws -> User {
+//        Task {
+//            do {
+//                let user = try await users.document(id).getDocument(as: User.self)
+//                return user
+//            }
+//            catch {
+//                fatalError("Cant fetch user document.")
+//            }
 //        }
 //    }
-//    func fetchDrink() async throws -> Drink {
-//        let document = drinksDB.document("drinks")
-//        do {
-//            let document = try await document.getDocument()
-//            let drink = try document.data(as: Drink.self)
-//            return drink
-//        }
-//        catch {
-//            fatalError("Cant fetch one drink")
-//        }
-//    }
+    
 }

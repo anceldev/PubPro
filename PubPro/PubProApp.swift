@@ -40,6 +40,6 @@ struct PubProApp: App {
                 AuthenticatedView()
             }
         }
-        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
     }
 }

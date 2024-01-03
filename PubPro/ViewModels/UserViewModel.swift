@@ -13,35 +13,73 @@ import FirebaseFirestoreSwift
 import Observation
 
 @Observable
-final class UserViewModel {
-
+class UserViewModel{
     var user = User.empty
     
     private var userFirestore: FirebaseAuth.User?
-    private var db = Firestore.firestore()
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     
-    init() {
+    init(){
         registerAuthStateHandler()
     }
-
     func registerAuthStateHandler() {
         if authStateHandler == nil {
             authStateHandler = Auth.auth().addStateDidChangeListener({ auth, user in
                 self.userFirestore = user
-                self.fetchUser()
+                if let userFirestore = self.userFirestore {
+                    self.user.id = userFirestore.uid
+                    self.getUser()
+                }
             })
+        }
+        else {
+            print("No user registered in authStateHandler")
         }
     }
     
-    private func fetchUser() {
-        guard let uid = userFirestore?.uid else { return }
+    func getUser() {
         Task {
             do {
-                self.user = try await db.collection("users").document(uid).getDocument(as: User.self)
+                self.user = try await Repositories.fetchUser(id: self.user.id!)
+            }
+            catch {
+                fatalError("getUser() function can get user from Repositories.fetchUser")
             }
         }
     }
-    
-    
 }
+
+//@Observable
+//final class UserViewModel {
+//
+//    var user = User.empty
+//    
+//    private var userFirestore: FirebaseAuth.User?
+//    private var db = Firestore.firestore()
+//    private var authStateHandler: AuthStateDidChangeListenerHandle?
+//    
+//    init() {
+//        registerAuthStateHandler()
+//        print("User view Model is: \(userFirestore?.uid ?? "No user fetched")")
+//    }
+//
+//    func registerAuthStateHandler() {
+//        if authStateHandler == nil {
+//            authStateHandler = Auth.auth().addStateDidChangeListener({ auth, user in
+//                self.userFirestore = user
+//                self.fetchUser()
+//            })
+//        }
+//    }
+    
+//    private func fetchUser() {
+//        guard let uid = userFirestore?.uid else { return }
+//        Task {
+//            do {
+//                self.user = try await db.collection("users").document(uid).getDocument(as: User.self)
+//            }
+//        }
+//    }
+    
+    
+//}

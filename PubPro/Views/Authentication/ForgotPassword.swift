@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ForgotPassword: View {
-    @Environment(AuthenticationViewModel.self) var authViewModel
+//    @Environment(AuthenticationViewModel.self) var authViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     @State private var email = ""
     var body: some View {
@@ -42,5 +43,5 @@ struct ForgotPassword: View {
 
 #Preview {
     ForgotPassword()
-        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
 }

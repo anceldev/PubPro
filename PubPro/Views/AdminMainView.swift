@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct AdminMainView: View {
-    @Environment(AuthenticationViewModel.self) var authVM
+//    @Environment(AuthenticationViewModel.self) var authVM
+    @EnvironmentObject var authVM: AuthenticationViewModel
     @State private var showScanner = false
     var body: some View {
         TabView {
             Profile(user: User.empty)
                 .tabItem { Label("Profile", systemImage: "person.fill") }
-                .environment(authVM)
+                .environmentObject(authVM)
             DrinksList()
                 .tabItem { Label("Drinkls", systemImage: "wineglass") }
             RewardsList()
@@ -25,5 +26,5 @@ struct AdminMainView: View {
 
 #Preview {
     AdminMainView()
-        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
 }

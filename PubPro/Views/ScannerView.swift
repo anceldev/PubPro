@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ScannerView: View {
+    
+    @State var isPresentingScanner = false
+    @State var scannedCode: String = "Scan QR code"
+    
     var body: some View {
         Text("Scanner View for admin")
     }

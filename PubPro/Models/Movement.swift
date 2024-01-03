@@ -20,3 +20,7 @@ struct Movement: Codable{
         self.id = UUID()
     }
 }
+
+extension Movement {
+    static let empty = Movement()
+}

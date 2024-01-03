@@ -11,7 +11,8 @@ import SwiftData
 struct SignUpView: View {
     
     @Environment(\.modelContext) var modelContext
-    @Environment(AuthenticationViewModel.self) var authViewModel
+//    @Environment(AuthenticationViewModel.self) var authViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     
     @State private var email = ""
@@ -76,5 +77,5 @@ struct SignUpView: View {
 
 #Preview {
     SignUpView()
-        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
 }

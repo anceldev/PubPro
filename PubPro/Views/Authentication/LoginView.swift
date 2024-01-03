@@ -10,7 +10,8 @@ import SwiftData
 
 struct LoginView: View {
     
-    @Environment(AuthenticationViewModel.self) var authViewModel
+//    @Environment(AuthenticationViewModel.self) var authViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     
     
@@ -90,5 +91,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
-        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
 }

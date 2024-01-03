@@ -32,20 +32,20 @@ enum AuthenticationFlow {
     case recoveryPassword
 }
 
-@Observable
-final class AuthenticationViewModel {
-    var email = ""
-    var password = ""
-    var confirmPassword = ""
+@MainActor
+final class AuthenticationViewModel: ObservableObject{
+    @Published var email = ""
+    @Published var password = ""
+    @Published var confirmPassword = ""
     
-    var flow: AuthenticationFlow = .login
-    
-    var isValid = false
-    var authenticationState: AuthenticationState = .unauthenticated
-    
-    var errorMessage = ""
-    var user: FirebaseAuth.User?
-    var displayName = ""
+    @Published var flow: AuthenticationFlow = .login
+
+    @Published var isValid = false
+    @Published var authenticationState: AuthenticationState = .unauthenticated
+
+    @Published var errorMessage = ""
+    @Published var user: FirebaseAuth.User?
+    @Published var displayName = ""
     
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     
@@ -101,13 +101,11 @@ final class AuthenticationViewModel {
         do {
             try await Auth.auth().createUser(withEmail: self.email, password: self.password)
             authenticationState = .authenticated
-            
-            self.createUserDocument(email: self.email)
-            
+            createUserDocument(email: email)
             return true
         }
         catch {
-            print(error)
+            print(error.localizedDescription)
             errorMessage = error.localizedDescription
             authenticationState = .unauthenticated
             return false
@@ -126,6 +124,7 @@ final class AuthenticationViewModel {
         catch {
             print(error)
             errorMessage = error.localizedDescription
+            fatalError("Can't sign out")
         }
     }
 }
@@ -135,7 +134,7 @@ enum AuthenticationError: Error {
 }
 extension AuthenticationViewModel {
     /**
-     Sign in with user account using GoogleAuthentication SDK
+     Sign in with GoogleAuthentication SDK
      */
     func signInWithGoogle() async -> Bool {
         guard let clientID = FirebaseApp.app()?.options.clientID else {
@@ -144,9 +143,15 @@ extension AuthenticationViewModel {
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         
-        guard let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = await windowScene.windows.first,
-              let rootViewController = await window.rootViewController else {
+        //        guard let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene,
+        //              let window = await windowScene.windows.first,
+        //              let rootViewController = await window.rootViewController else {
+        //            print("There is no root view controller")
+        //            return false
+        //        }
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first,
+              let rootViewController = window.rootViewController else {
             print("There is no root view controller")
             return false
         }
@@ -163,8 +168,9 @@ extension AuthenticationViewModel {
             print("User \(firebaseUser.uid) signed in with email \(firebaseUser.email ?? "unknown")")
             authenticationState = .authenticated
             
-            self.createUserDocument(email: userAuthentication.user.profile!.email)
+            createUserDocument(email: userAuthentication.user.profile!.email)
             
+            print("User is: \(firebaseUser.uid)")
             return true
         }
         catch {
@@ -179,9 +185,9 @@ extension AuthenticationViewModel {
      Creates new User document in Firestore database
      */
     func createUserDocument(email: String) {
-        let newUser = User(email: email)
+        let newUser = User(email: email, role: .user)
         guard let documentId = user?.uid else { return }
-        let documentRef = Firestore.firestore().collection("users").document(documentId)
+        let documentRef = Firestore.firestore().collection("users_v1").document(documentId)
         
         documentRef.getDocument { document, error in
             if let document = document, document.exists {
