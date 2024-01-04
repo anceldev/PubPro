@@ -11,7 +11,7 @@ import SwiftData
 struct MainView: View {
 //    @Environment(AuthenticationViewModel.self) var viewModel
 
-    var viewModel = UserViewModel()
+    @State var viewModel = UserViewModel()
     
     var body: some View {
         TabView {
@@ -23,7 +23,7 @@ struct MainView: View {
                 Profile(user: viewModel.user)
                     .tabItem { Label("Profile", systemImage: "person") }
     //                .environment(authVM)
-                HistoryView()
+                HistoryView(movements: viewModel.user.movements)
                     .tabItem { Label("History", systemImage: "list.bullet") }
             }
             DrinksList()

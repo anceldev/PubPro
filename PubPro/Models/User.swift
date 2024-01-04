@@ -15,14 +15,15 @@ struct User: Codable, Identifiable {
     var email: String
     var phone: String
     var role: Role
-    var movements = [Movement]()
+    var movements: [Movement]
     var points: Int = 0
     
-    init(name: String = "", email: String = "", phone: String = "", role: Role = .user) {
+    init(name: String = "", email: String = "", phone: String = "", role: Role = .user, movements: [Movement] = []) {
         self.name = name
         self.email = email
         self.phone = phone
         self.role = role
+        self.movements = movements
     }
 }
 

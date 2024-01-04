@@ -23,25 +23,18 @@ class Repositories {
             return User.empty
         }
     }
-    static func fetchMovements(id: String) async throws -> [Movement] {
-//        do {
-//            let movements = try await docReference
-//                .collection("users_v1").document(id)
-//                .collection("movements").getDocuments()
-//        }
-        return []
+    static func addMovement(drink: Item, uid: String) async throws -> Bool {
+        let movement = Movement(drink: drink.name, points: drink.value, date: .now)
+        do {
+            let document = docReference.collection("users_v1").document(uid)
+            try await document.updateData([
+                "movements": FieldValue.arrayUnion([movement])
+            ])
+            return true
+        }
+        catch {
+            print("Error in addMovement func.")
+            return false
+        }
     }
-    
-//    static func fetchUser(id: String) async throws -> User {
-//        Task {
-//            do {
-//                let user = try await users.document(id).getDocument(as: User.self)
-//                return user
-//            }
-//            catch {
-//                fatalError("Cant fetch user document.")
-//            }
-//        }
-//    }
-    
 }

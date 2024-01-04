@@ -9,14 +9,14 @@ import Foundation
 import SwiftData
 import Observation
 
-@Observable
-final class ViewModel {
-    let container = try! ModelContainer(for: Drink.self)
-    var drink: Drink?
-    
-    @MainActor
-    var modelContext: ModelContext {
-        container.mainContext
-    }
-    
-}
+//@Observable
+//final class ViewModel {
+//    let container = try! ModelContainer(for: Drink.self)
+//    var drink: Drink?
+//    
+//    @MainActor
+//    var modelContext: ModelContext {
+//        container.mainContext
+//    }
+//    
+//}

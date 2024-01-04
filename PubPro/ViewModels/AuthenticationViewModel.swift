@@ -185,7 +185,7 @@ extension AuthenticationViewModel {
      Creates new User document in Firestore database
      */
     func createUserDocument(email: String) {
-        let newUser = User(email: email, role: .user)
+        let newUser = User(email: email, role: .user, movements: [Movement(drink: "Welcome gift", points: 60, date: .now)])
         guard let documentId = user?.uid else { return }
         let documentRef = Firestore.firestore().collection("users_v1").document(documentId)
         

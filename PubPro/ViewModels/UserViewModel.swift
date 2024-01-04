@@ -22,6 +22,9 @@ class UserViewModel{
     init(){
         registerAuthStateHandler()
     }
+    /**
+     Registers AuthStateDidChangeListenerHandle to get current user signed in
+     */
     func registerAuthStateHandler() {
         if authStateHandler == nil {
             authStateHandler = Auth.auth().addStateDidChangeListener({ auth, user in
@@ -36,11 +39,20 @@ class UserViewModel{
             print("No user registered in authStateHandler")
         }
     }
-    
+    /**
+     Fetch user data from Firestore document
+     */
     func getUser() {
         Task {
             do {
                 self.user = try await Repositories.fetchUser(id: self.user.id!)
+                var totalPoints = 0
+                for movement in user.movements {
+                    print(movement)
+                    totalPoints += movement.points
+                }
+                self.user.points = totalPoints
+                print(user.points)
             }
             catch {
                 fatalError("getUser() function can get user from Repositories.fetchUser")
@@ -48,38 +60,3 @@ class UserViewModel{
         }
     }
 }
-
-//@Observable
-//final class UserViewModel {
-//
-//    var user = User.empty
-//    
-//    private var userFirestore: FirebaseAuth.User?
-//    private var db = Firestore.firestore()
-//    private var authStateHandler: AuthStateDidChangeListenerHandle?
-//    
-//    init() {
-//        registerAuthStateHandler()
-//        print("User view Model is: \(userFirestore?.uid ?? "No user fetched")")
-//    }
-//
-//    func registerAuthStateHandler() {
-//        if authStateHandler == nil {
-//            authStateHandler = Auth.auth().addStateDidChangeListener({ auth, user in
-//                self.userFirestore = user
-//                self.fetchUser()
-//            })
-//        }
-//    }
-    
-//    private func fetchUser() {
-//        guard let uid = userFirestore?.uid else { return }
-//        Task {
-//            do {
-//                self.user = try await db.collection("users").document(uid).getDocument(as: User.self)
-//            }
-//        }
-//    }
-    
-    
-//}

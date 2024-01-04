@@ -13,7 +13,7 @@ struct Profile: View {
     
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     
-    @State var user: User
+    var user: User
     @State var myQR: Image?
     
     var body: some View {

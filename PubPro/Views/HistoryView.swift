@@ -8,11 +8,31 @@
 import SwiftUI
 
 struct HistoryView: View {
+    
+    var movements: [Movement]
+    
     var body: some View {
-        Text("History points view")
+        VStack {
+            List(movements) { movement in
+                HStack {
+                    VStack {
+                        Image(systemName: "wineglass")
+                    }
+                    VStack {
+                        Text(movement.drink)
+                    }
+                    Spacer()
+                    VStack{
+                        Text("\(movement.points)")
+                            .foregroundStyle(movement.points < 0 ? .red : .blue)
+                    }
+                }
+            }
+            .listStyle(.inset)
+        }
     }
 }
 
 #Preview {
-    HistoryView()
+    HistoryView(movements: [])
 }
