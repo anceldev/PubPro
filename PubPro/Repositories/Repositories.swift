@@ -24,17 +24,18 @@ class Repositories {
         }
     }
     static func addMovement(drink: Item, uid: String) async throws -> Bool {
-        let movement = Movement(drink: drink.name, points: drink.value, date: .now)
-        do {
-            let document = docReference.collection("users_v1").document(uid)
-            try await document.updateData([
-                "movements": FieldValue.arrayUnion([movement])
-            ])
-            return true
-        }
-        catch {
-            print("Error in addMovement func.")
-            return false
-        }
+//        let movement = Movement(drink: drink.name, points: drink.value, date: .now)
+//        do {
+//            let document = docReference.collection("users_v1").document(uid)
+//            try await document.updateData([
+//                "movements": FieldValue.arrayUnion([movement])
+//            ])
+//            return true
+//        }
+//        catch {
+//            print("Error in addMovement func.")
+//            return false
+//        }
+        return true
     }
 }

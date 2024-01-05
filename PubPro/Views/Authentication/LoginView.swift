@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftData
+// For Sign-In with Apple
+import AuthenticationServices
 
 struct LoginView: View {
     
@@ -30,24 +32,33 @@ struct LoginView: View {
                 .textInputAutocapitalization(.never)
             SecureField("Password", text: $password, prompt: Text("Password"))
                 .autocorrectionDisabled()
-            Button(action: signInWithEmailPassword) {
-                Text("Log-In")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .foregroundStyle(.ownDarkGray).bold()
-            }
-            .buttonStyle(.bordered)
-            
-            Button(action: signInWithGoogle) {
-                Text("Sign In with Google")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(alignment: .leading) {
-                        Image("Google")
-                            .resizable()
-                            .frame(width: 30, height: 30, alignment: .center)
-                    }
-                    .foregroundStyle(.ownDarkGray).bold()
+            VStack{
+                Button(action: signInWithEmailPassword) {
+                    Text("Log-In")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .foregroundStyle(.ownDarkGray).bold()
+                }
+                Button(action: signInWithGoogle) {
+                    Text("Sign In with Google")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .background(alignment: .leading) {
+                            Image("Google")
+                                .resizable()
+                                .frame(width: 30, height: 30, alignment: .center)
+                        }
+                        .foregroundStyle(.ownDarkGray).bold()
+                }
+                SignInWithAppleButton { request in
+                    authViewModel.handleSignInWithApppleRequest(request)
+                } onCompletion: { result in
+                    authViewModel.handleSignInWithAppleCompletion(result)
+                }
+                .signInWithAppleButtonStyle(.black)
+                .frame(maxWidth: .infinity, maxHeight: 50)
+                .cornerRadius(8)
+
             }
             .buttonStyle(.bordered)
             

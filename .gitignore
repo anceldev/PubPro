@@ -91,3 +91,7 @@ iOSInjectionProject/
 
 **DS_Store
 **.plist
+data
+firebase.json
+firestore-debug.log
+ui-debug.log

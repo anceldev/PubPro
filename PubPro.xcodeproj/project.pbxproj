@@ -66,6 +66,7 @@
 		B46120EF2B13E31B000EBC4D /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B46120F12B13E31D000EBC4D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B46120F42B13E31D000EBC4D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B48229C62B48033400FCA1DD /* PubPro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PubPro.entitlements; sourceTree = "<group>"; };
 		B49583182B3238C7009DAAAB /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B495831A2B3239A0009DAAAB /* DrinksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinksList.swift; sourceTree = "<group>"; };
 		B495831C2B3239D4009DAAAB /* RewardsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsList.swift; sourceTree = "<group>"; };
@@ -181,6 +182,7 @@
 		B46120EC2B13E31B000EBC4D /* PubPro */ = {
 			isa = PBXGroup;
 			children = (
+				B48229C62B48033400FCA1DD /* PubPro.entitlements */,
 				B4E5054B2B321C6500E8BE1F /* Info.plist */,
 				B46120ED2B13E31B000EBC4D /* PubProApp.swift */,
 				B44C6FEA2B2A378000C8995C /* Resources */,
@@ -461,6 +463,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PubPro/PubPro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = PubPro/Resources;
@@ -492,6 +495,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PubPro/PubPro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = PubPro/Resources;
