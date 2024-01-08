@@ -18,20 +18,31 @@ struct Profile: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            Spacer()
+            VStack {
+                TitleView(title: "Profile")
+            }
+            .padding(33)
             VStack{
-                Text("¡Welcome!")
+                Text("Welcome")
+                    .font(.custom("RobotoCondensed-Regular", size: 32))
                 Text(user.name)
-                Text("You have \(user.points) points")
-                Text("Your role is: \(user.role.rawValue)")
-                
-//                if let personalQR = myQR {
-//                    personalQR
-//                        .resizable()
-//                        .frame(width: 350, height: 350)
-//                }
-//                
+                    .font(.custom("RobotoCondensed-Black", size: 32))
+                Text("You have")
+                    .font(.custom("RobotoCondensed-Medium", size: 18))
+                    .foregroundStyle(.beerOrange)
+                Text("\(user.points)")
+                    .foregroundStyle(.ppDark)
+                    .font(.custom("RobotoCondensed-Black", size: 70))
+                Text("Points")
+                    .foregroundStyle(.beerYellow)
+                    .font(.custom("RobotoCondensed-Bold", size: 24))
+            }
+            VStack{
+                if let profileQR = myQR {
+                    profileQR
+                        .resizable()
+                        .frame(width: 350, height: 350)
+                }
 //                if myQR != nil {
 //                    let personalQR = myQR!
 //                    personalQR
@@ -40,12 +51,12 @@ struct Profile: View {
 //                }
                 
             }
+            .padding(30)
             Spacer()
             Spacer()
-            Button("SignOut", action: signOutAccout)
-                .foregroundStyle(.red.opacity(0.7))
-            Spacer()
+
         }
+        .padding(.top, 33)
         .onAppear(perform: {
             generateQRCode()
         })
@@ -54,10 +65,11 @@ struct Profile: View {
         authViewModel.signOut()
     }
     func generateQRCode() {
-//        guard let imageQR = try? QRCode(string: authViewModel.user!.providerID, size: CGSize(width: 400, height: 400))?.image() else {
-//            fatalError("Can't generate QR code")
-//        }
-//        self.myQR = Image(uiImage: imageQR)
+        guard let uiImageQR = try? QRCode(string: user.id ?? "No image", size: CGSize(width: 400, height: 400))?.image() else {
+            fatalError("Can't generate QR code")
+        }
+        self.myQR = Image(uiImage: uiImageQR)
+        print(user.id)
     }
 }
 

@@ -14,8 +14,11 @@ struct ForgotPassword: View {
     @State private var email = ""
     var body: some View {
         VStack {
+            Spacer()
+            Spacer()
             Text("Recover Password")
                 .font(.largeTitle)
+            Spacer()
             TextField("Email", text: $email, prompt: Text("Email"))
             
             Button(action: recoverPassword, label: {
@@ -32,6 +35,8 @@ struct ForgotPassword: View {
                 }
             }
             .padding(.vertical, 8)
+            Spacer()
+            Spacer()
         }
         .padding(20)
     }

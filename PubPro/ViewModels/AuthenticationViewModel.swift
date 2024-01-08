@@ -6,15 +6,15 @@
 //
 
 import Foundation
+// Firebase SDK
 import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import Observation
-// For Sign in with Google
+// Sign in with Google
 import GoogleSignIn
 import GoogleSignInSwift
-// Fir Sign in with Apple
+// Sign in with Apple
 import AuthenticationServices
 import CryptoKit
 /**

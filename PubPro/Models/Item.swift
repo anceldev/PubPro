@@ -25,7 +25,6 @@ class Drink: Item {
     var descriptionItem: String
     var value: Int
     var lastUpdate: Date
-
     
     init(id: UUID = UUID(), name: String, descriptionItem: String, value: Int, lastUpdate: Date = .now) {
         self.id = id

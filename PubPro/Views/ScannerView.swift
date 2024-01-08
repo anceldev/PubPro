@@ -40,6 +40,10 @@ struct ScannerView: View {
     
     var body: some View {
         VStack {
+            VStack {
+                TitleView(title: "Scanner")
+            }
+            .padding(33)
             
             VStack {
                 Spacer()

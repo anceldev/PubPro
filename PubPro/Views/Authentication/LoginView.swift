@@ -12,7 +12,7 @@ import AuthenticationServices
 
 struct LoginView: View {
     
-//    @Environment(AuthenticationViewModel.self) var authViewModel
+    //    @Environment(AuthenticationViewModel.self) var authViewModel
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     
@@ -27,6 +27,7 @@ struct LoginView: View {
             Spacer()
             Text("Login")
                 .font(.largeTitle)
+            Spacer()
             TextField("Email", text: $email, prompt: Text("Email"))
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
@@ -58,7 +59,7 @@ struct LoginView: View {
                 .signInWithAppleButtonStyle(.black)
                 .frame(maxWidth: .infinity, maxHeight: 50)
                 .cornerRadius(8)
-
+                
             }
             .buttonStyle(.bordered)
             

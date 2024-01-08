@@ -17,6 +17,7 @@ struct User: Codable, Identifiable {
     var role: Role
     var movements: [Movement]
     var points: Int = 0
+    var lastUpdateItems: Date? = nil
     
     init(name: String = "", email: String = "", phone: String = "", role: Role = .user, movements: [Movement] = []) {
         self.name = name
@@ -33,5 +34,5 @@ enum Role: String, Codable {
     case admin = "Admin"
 }
 extension User {
-    static var empty = User()
+    static var empty = User(name: "Username", movements: [Movement(drink: "Cóctel", points: 50), Movement(drink: "Cachimba", points: 60), Movement(drink: "Cubata", points: 40)])
 }

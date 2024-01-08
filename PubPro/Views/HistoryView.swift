@@ -13,6 +13,10 @@ struct HistoryView: View {
     
     var body: some View {
         VStack {
+            VStack {
+                TitleView(title: "History Points")
+            }
+            .padding(33)
             List(movements) { movement in
                 HStack {
                     VStack {
@@ -34,5 +38,5 @@ struct HistoryView: View {
 }
 
 #Preview {
-    HistoryView(movements: [])
+    HistoryView(movements: User.empty.movements)
 }

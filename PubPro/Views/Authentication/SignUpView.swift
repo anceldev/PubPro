@@ -28,6 +28,7 @@ struct SignUpView: View {
             Spacer()
             Text("Register")
                 .font(.largeTitle)
+            Spacer()
             TextField("Email", text: $email, prompt: Text("Email"))
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)

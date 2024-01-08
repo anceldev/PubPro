@@ -9,9 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-//    @Environment(AuthenticationViewModel.self) var viewModel
-
+    //    @Environment(AuthenticationViewModel.self) var viewModel
+    
     @State var viewModel = UserViewModel()
+//    @State var viewModel: UserViewModel
     
     var body: some View {
         TabView {
@@ -22,7 +23,7 @@ struct MainView: View {
             else {
                 Profile(user: viewModel.user)
                     .tabItem { Label("Profile", systemImage: "person") }
-    //                .environment(authVM)
+                //                .environment(authVM)
                 HistoryView(movements: viewModel.user.movements)
                     .tabItem { Label("History", systemImage: "list.bullet") }
             }
@@ -33,13 +34,20 @@ struct MainView: View {
             if viewModel.user.role == .user {
                 SettingsView()
                     .tabItem { Label("Settings", systemImage: "gear") }
+                    .toolbarBackground(Color.ppDark)
             }
         }
         .tint(.beerOrange)
+        
     }
 }
-
 #Preview {
-    MainView()
-        .environmentObject(AuthenticationViewModel())
+    let userViewModel = UserViewModel()
+    userViewModel.user.role = .user
+    return MainView(viewModel: userViewModel)
+}
+#Preview {
+    let adminViewModel = UserViewModel()
+    adminViewModel.user.role = .admin
+    return MainView(viewModel: adminViewModel)
 }

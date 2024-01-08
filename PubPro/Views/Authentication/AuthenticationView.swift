@@ -31,5 +31,17 @@ struct AuthenticationView: View {
 
 #Preview {
     AuthenticationView()
-//        .environment(AuthenticationViewModel())
+        .environmentObject(AuthenticationViewModel())
+}
+#Preview {
+    let authViewModel = AuthenticationViewModel()
+    authViewModel.flow = .signUp
+    return AuthenticationView()
+        .environmentObject(authViewModel)
+}
+#Preview {
+    let authViewModel = AuthenticationViewModel()
+    authViewModel.flow = .recoveryPassword
+    return AuthenticationView()
+        .environmentObject(authViewModel)
 }

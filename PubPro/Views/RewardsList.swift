@@ -9,7 +9,13 @@ import SwiftUI
 
 struct RewardsList: View {
     var body: some View {
-        Text("Rewards list")
+        VStack {
+            VStack {
+                TitleView(title: "Rewards")
+            }
+            .padding(33)
+            Spacer()
+        }
     }
 }
 

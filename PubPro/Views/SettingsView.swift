@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     var body: some View {
-        Text("Settings")
+        VStack {
+            VStack {
+                TitleView(title: "Settings")
+            }
+            .padding(33)
+            Spacer()
+            Button("SignOut", action: signOutAccount)
+                .foregroundStyle(.red.opacity(0.7))
+            Spacer()
+        }
+    }
+    private func signOutAccount() {
+        authViewModel.signOut()
     }
 }
 
 #Preview {
     SettingsView()
+        .environmentObject(AuthenticationViewModel())
 }
