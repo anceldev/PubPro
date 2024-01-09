@@ -8,20 +8,64 @@
 import SwiftUI
 
 struct ItemRow: View {
-//    let item: Item
+    
+//    let movement: Movement
+    let item: Item
+    let colorItem: Color
+    
+//    init(movement: Movement) {
+//        self.movement = movement
+    init(item: Item){
+        self.item = item
+        if item is Drink{
+            self.colorItem = Color.beerOrange
+        }
+        else {
+            self.colorItem = Color.ppGreen
+        }
+    }
+    
     var body: some View {
-//        HStack {
-//            Text(item.name)
-//            Text("\(item.value)")
-//        }
-//        .background(.white)
-//        .overlay {
-//            RoundedRectangle(cornerRadius: 8)
-//        }
-        Text("Item row")
+        HStack {
+            HStack(alignment: .top) {
+                VStack {
+                    Image(item.image)
+                        .resizable()
+                        .frame(width: 66, height: 66)
+                        .padding(.bottom, 2)
+                }
+                VStack(alignment: .leading) {
+                    Text(item.name)
+                        .font(.custom("Styleturn", size: 22))
+                    
+                    Text(item.descriptionItem)
+                        .font(.custom("RobotoCondensed-Regular", size: 12))
+                        .lineLimit(2)
+                }
+                .padding(.top, 10)
+            }
+            .padding(3)
+            Spacer()
+            HStack(alignment: .center) {
+                
+                
+                VStack(alignment: .trailing) {
+                    Text("\(item.value)")
+                        .foregroundStyle(colorItem)
+                        .font(.custom("RobotoCondensed-Black", size: 48))
+                    
+                }
+                .padding(.trailing, 12)
+            }
+        }
+        .background(.white)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .frame(maxWidth: .infinity)
+        .padding(0)
+        
     }
 }
 
 #Preview {
-   ItemRow()
+    ItemRow(item: Drink.drinks[0])
 }

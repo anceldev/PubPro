@@ -12,7 +12,7 @@ struct MainView: View {
     //    @Environment(AuthenticationViewModel.self) var viewModel
     
     @State var viewModel = UserViewModel()
-//    @State var viewModel: UserViewModel
+    //    @State var viewModel: UserViewModel
     
     var body: some View {
         TabView {
@@ -31,11 +31,10 @@ struct MainView: View {
                 .tabItem { Label("Drinks", systemImage: "wineglass") }
             RewardsList()
                 .tabItem { Label("Rewards", systemImage: "gift.fill") }
-            if viewModel.user.role == .user {
-                SettingsView()
-                    .tabItem { Label("Settings", systemImage: "gear") }
-                    .toolbarBackground(Color.ppDark)
-            }
+            SettingsView()
+                .tabItem { Label("Settings", systemImage: "gear") }
+                .toolbarBackground(Color.ppDark)
+            
         }
         .tint(.beerOrange)
         

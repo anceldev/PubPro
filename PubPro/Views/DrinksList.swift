@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct DrinksList: View {
+    let drinks = Drink.drinks
     var body: some View {
         VStack {
             VStack {
                 TitleView(title: "Drinks")
             }
             .padding(33)
+            ForEach(drinks, id: \.id) { drink in
+                ItemRow(item: drink)
+            }
+            .padding(.horizontal, 15)
+            .padding(.vertical, 3)
             Spacer()
         }
+        .background(.ppDarkWhite)
     }
 }
 

@@ -9,20 +9,22 @@ import Foundation
 
 struct Movement: Codable, Identifiable{
     var id: UUID
-    var drink: String
-    var points: Int
+//    var drink: String
+//    var points: Int
+    var itemID: UUID
+//    var value: Int
     var date: Date
     
-    init(drink: String = "", points: Int = 0, date: Date = .now) {
+    init(itemID: UUID, points: Int = 0, date: Date = .now) {
 //        self.drinkID = drinkID
         self.id = UUID()
-        self.drink = drink
-        self.points = points
+//        self.drink = drink
+//        self.points = points
+        self.itemID = itemID
         self.date = date
-        
     }
 }
 
 extension Movement {
-    static let empty = Movement()
+//    static let empty = Movement()
 }

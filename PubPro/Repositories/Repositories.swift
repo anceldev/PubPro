@@ -15,7 +15,7 @@ class Repositories {
     
     static func fetchUser(id: String) async throws -> User {
         do {
-            let user = try await docReference.collection("users_v1").document(id).getDocument(as: User.self)
+            let user = try await docReference.collection("users_v1.1").document(id).getDocument(as: User.self)
             return user
         }
         catch {
@@ -36,6 +36,46 @@ class Repositories {
 //            print("Error in addMovement func.")
 //            return false
 //        }
+        return true
+    }
+    static func fetchDrinks() async throws -> [Drink] {
+        let documentsSnapshot = try await docReference.collection("drinks").getDocuments()
+        return documentsSnapshot.documents.compactMap { document in
+            try! document.data(as: Drink.self)
+        }
+    }
+    static func fetchRewards() async throws -> [Reward] {
+        let documentsSnapshot = try await docReference.collection("drinks").getDocuments()
+        return documentsSnapshot.documents.compactMap { document in
+            try! document.data(as: Reward.self)
+        }
+    }
+//    static func updateDrinks() -> Bool{
+//        let ref = docReference.collection("drinksDataBase")
+//        for drink in Drink.drinks {
+//            let drinkDocReference = ref.document(drink.id.uuidString)
+//            do {
+//                try drinkDocReference.setData(from: drink)
+//            }
+//            catch {
+//                print(["[updateDrinks] Cannot write to drinks DB"])
+//                return false
+//            }
+//        }
+//        return true
+//    }
+    static func updateItemsDB<T:Item>(for items: [T], collection: String) -> Bool {
+        let ref = docReference.collection(collection)
+        for item in items {
+            let itemDocReference = ref.document(item.id.uuidString)
+            do {
+                try itemDocReference.setData(from: item)
+            }
+            catch {
+                print("[updateItemsDB()] Cannot update Firestore DB for \(collection) collection")
+                return false
+            }
+        }
         return true
     }
 }

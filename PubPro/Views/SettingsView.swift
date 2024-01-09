@@ -16,6 +16,22 @@ struct SettingsView: View {
             }
             .padding(33)
             Spacer()
+//            Button("Write drinks DB") {
+//                if Repositories.updateItemsDB(for: Drink.drinks, collection: "drinksDataBase") {
+//                    print("Drinks DB updated")
+//                } else {
+//                    print("Couldn't update drinks DB")
+//                }
+//            }
+//            Spacer()
+//            Button("Write rewards DB") {
+//                if Repositories.updateItemsDB(for: Reward.rewards, collection: "rewardsDataBase") {
+//                    print("Rewards database upadted")
+//                } else {
+//                    print("Couldn't update rewards database")
+//                }
+//            }
+            Spacer()
             Button("SignOut", action: signOutAccount)
                 .foregroundStyle(.red.opacity(0.7))
             Spacer()
@@ -23,6 +39,9 @@ struct SettingsView: View {
     }
     private func signOutAccount() {
         authViewModel.signOut()
+    }
+    private func updateDrinksDB() {
+        
     }
 }
 

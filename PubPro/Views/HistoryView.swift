@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    var movements: [Movement]
+    let movements: [Movement]
     
     var body: some View {
         VStack {
@@ -17,23 +17,14 @@ struct HistoryView: View {
                 TitleView(title: "History Points")
             }
             .padding(33)
-            List(movements) { movement in
-                HStack {
-                    VStack {
-                        Image(systemName: "wineglass")
-                    }
-                    VStack {
-                        Text(movement.drink)
-                    }
-                    Spacer()
-                    VStack{
-                        Text("\(movement.points)")
-                            .foregroundStyle(movement.points < 0 ? .red : .blue)
-                    }
-                }
+            ForEach(movements) { movement in
+                ItemRow(item: Drink.drinks.first(where: { movement.itemID == $0.id })!)
+                    .padding(15)
             }
             .listStyle(.inset)
+            Spacer()
         }
+        .background(.ppDarkWhite)
     }
 }
 
