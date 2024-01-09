@@ -47,14 +47,9 @@ class UserViewModel{
             do {
                 self.user = try await Repositories.fetchUser(id: self.user.id!)
                 print("Your role is: \(self.user.role.rawValue)")
-//                var totalPoints = 0
                 for movement in user.movements {
                     print(movement)
-//                    totalPoints += movement.points
-                    
                 }
-//                self.user.points = totalPoints
-//                print(user.points)
             }
             catch {
                 fatalError("getUser() function can get user from Repositories.fetchUser")

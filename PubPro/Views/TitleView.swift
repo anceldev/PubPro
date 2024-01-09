@@ -15,12 +15,9 @@ struct TitleView: View {
         VStack {
             Rectangle()
                 .fill(.black)
-//                .frame(width: .infinity, height: 2)
-//                .frame(minWidth: 1, maxWidth: .infinity, minHeight: 2, maxHeight: 2)
                 .frame(maxWidth: .infinity, minHeight: 2, maxHeight: 2)
             Rectangle()
                 .fill(.black)
-//                .frame(width: .infinity, height: 2)
                 .frame(maxWidth: .infinity, minHeight: 2, maxHeight: 2)
                 .padding(.top, -4)
         }
@@ -49,7 +46,7 @@ struct TitleView: View {
         .foregroundStyle(.ppDark)
     }
 }
-
-#Preview {
-    TitleView(title: "History points")
-}
+//
+//#Preview {
+//    TitleView(title: "History points")
+//}

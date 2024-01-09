@@ -13,11 +13,14 @@ struct ScannerView: View {
     @State var isPresentingScanner = false
     @State var scannedCode: String = ""
     
-    var drinks: [Drink] = [
-        Drink(name: "Cóctel", descriptionItem: "Description of cóctel", value: 50),
-        Drink(name: "Cachimba", descriptionItem: "Description of cachimba", value: 100),
-        Drink(name: "Combinado", descriptionItem: "Description of combinado", value: 70)
-    ]
+    let drinks: [Drink]
+    let rewards: [Reward]
+    
+    //    var drinks: [Drink] = [
+    //        Drink(name: "Cóctel", descriptionItem: "Description of cóctel", value: 50),
+    //        Drink(name: "Cachimba", descriptionItem: "Description of cachimba", value: 100),
+    //        Drink(name: "Combinado", descriptionItem: "Description of combinado", value: 70)
+    //    ]
     
     @State private var buttonsBar: ButtonsBar = .none
     
@@ -41,82 +44,77 @@ struct ScannerView: View {
     var body: some View {
         VStack {
             VStack {
-                TitleView(title: "Scanner")
-            }
-            .padding(33)
-            
-            VStack {
-                Spacer()
-                if scannedCode.isEmpty {
-                    Button("Scan QR code") {
-                        self.isPresentingScanner.toggle()
-                    }
+                VStack {
+                    TitleView(title: "Scanner")
                 }
-                else {
-                    VStack {
-                        VStack {
-                            Button("Give Points") {
-                                withAnimation {
-                                    buttonsBar = .drinks
-                                }
-                            }
-                            Button("Give Rewards") {
-                                withAnimation{
-                                    buttonsBar = .rewards
-                                }
-                            }
+                .padding(33)
+                
+                VStack {
+                    Spacer()
+                    if scannedCode.isEmpty {
+                        Button("Scan QR code") {
+                            self.isPresentingScanner.toggle()
                         }
-                        .font(.title)
                         .buttonStyle(.borderedProminent)
-                        .tint(.beerOrange)
+                    }
+                    else {
                         VStack {
-                            switch buttonsBar {
-                            case .drinks:
-                                DynamicButtonsBar(elements: drinks)
-                            case .rewards:
-                                ProgressView()
-                            case .none:
-                                Text("Select an Action")
+                            VStack {
+                                Button("Give Points") {
+                                    withAnimation {
+                                        buttonsBar = .drinks
+                                    }
+                                }
+                                Button("Give Rewards") {
+                                    withAnimation{
+                                        buttonsBar = .rewards
+                                    }
+                                }
+                            }
+                            .font(.title)
+                            .buttonStyle(.borderedProminent)
+                            .tint(.beerOrange)
+                            VStack {
+                                switch buttonsBar {
+                                case .drinks:
+                                    DynamicButtonsBar(items: drinks)
+                                case .rewards:
+                                    DynamicButtonsBar(items: rewards)
+                                case .none:
+                                    Text("Select an Action")
+                                }
                             }
                         }
                     }
+                    Spacer()
                 }
-                Spacer()
-                Button("SignOut") {
-                    withAnimation {
-                        signOutAccount()
-                    }
-                }
-                .foregroundStyle(.red.opacity(0.7))
+                .sheet(isPresented: $isPresentingScanner, content: {
+                    self.scannerSheet
+                })
             }
-            .sheet(isPresented: $isPresentingScanner, content: {
-                self.scannerSheet
-            })
+            .background(.ppDarkWhite)
         }
     }
     @ViewBuilder
-    func DynamicButtonsBar<T:Item>(elements: [T]) -> some View{
+    func DynamicButtonsBar<T:Item>(items: [T]) -> some View{
         HStack {
-//            List {
-                ForEach(elements, id: \.id) { element in
-                    Button(element.name) {
-//                        self.givePoints(points: element.value)
-                        self.givePoints(element: element)
-                    }
+            ForEach(items, id: \.id) { item in
+                Button(item.name) {
+                    self.givePoints(for: item)
                 }
-//            }
+                .buttonStyle(.borderedProminent)
+                .frame(maxWidth: .infinity)
+            }
         }
+        .padding(.horizontal, 15)
     }
-    private func signOutAccount() {
-        authViewModel.signOut()
-    }
-    private func givePoints(element: Item) {
-        print("Adding \(element.value) points to \(scannedCode)")
+    private func givePoints(for item: Item) {
+        print("Adding \(item.value) points to \(scannedCode)")
         Task {
             do {
-                let completed = try await Repositories.addMovement(drink: element, uid: scannedCode)
+                let completed = try await Repositories.addMovement(for: item, with: scannedCode)
                 if completed {
-                    print("Movement edded")
+                    print("Movement added")
                 }
                 else {
                     print("Something went wrong, we couldnt add the movement.")
@@ -125,15 +123,10 @@ struct ScannerView: View {
             catch {
                 print("Error after Repositories.addMovement")
             }
-            
         }
     }
-    private func getRewards() {
-        
-    }
-    
 }
 
 #Preview {
-    ScannerView()
+    ScannerView(drinks: [], rewards: [])
 }

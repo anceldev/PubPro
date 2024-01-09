@@ -8,34 +8,44 @@
 import SwiftUI
 
 struct SettingsView: View {
+    
     @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @Binding var userViewModel: UserViewModel
+    @State var userName: String = ""
+    @State private var confirmChanges = false
+    
     var body: some View {
         VStack {
             VStack {
-                TitleView(title: "Settings")
+                VStack {
+                    TitleView(title: "Settings")
+                }
+                .padding(33)
+                Spacer()
+                
+                VStack {
+                    Text("Update your profile data:")
+                    TextField("Username", text: $userName)
+                }
+                .padding(.horizontal, 15)
+                Spacer()
+                Button("Update", action: updateProfileData)
+                    .buttonStyle(.borderedProminent)
+                    .confirmationDialog("Change profile", isPresented: $confirmChanges, actions: {
+                        Button("Ok") {
+                            print("Ok to confirmation dialog")
+                            confirmChanges = false
+                            userName = ""
+                        }
+                    }, message: {
+                        Text("Your name has been updated")
+                    })
+                Spacer()
+                Button("SignOut", action: signOutAccount)
+                    .foregroundStyle(.red.opacity(0.7))
             }
-            .padding(33)
-            Spacer()
-//            Button("Write drinks DB") {
-//                if Repositories.updateItemsDB(for: Drink.drinks, collection: "drinksDataBase") {
-//                    print("Drinks DB updated")
-//                } else {
-//                    print("Couldn't update drinks DB")
-//                }
-//            }
-//            Spacer()
-//            Button("Write rewards DB") {
-//                if Repositories.updateItemsDB(for: Reward.rewards, collection: "rewardsDataBase") {
-//                    print("Rewards database upadted")
-//                } else {
-//                    print("Couldn't update rewards database")
-//                }
-//            }
-            Spacer()
-            Button("SignOut", action: signOutAccount)
-                .foregroundStyle(.red.opacity(0.7))
-            Spacer()
         }
+        .background(.ppDarkWhite)
     }
     private func signOutAccount() {
         authViewModel.signOut()
@@ -43,9 +53,14 @@ struct SettingsView: View {
     private func updateDrinksDB() {
         
     }
+    private func updateProfileData() {
+        self.confirmChanges = authViewModel.userProfileChangeRequest(username: userName)
+        userViewModel.user.name = userName // Update name locally for this sesion
+    }
 }
 
 #Preview {
-    SettingsView()
+    @State var userViewModel = UserViewModel()
+    return SettingsView(userViewModel: $userViewModel)
         .environmentObject(AuthenticationViewModel())
 }

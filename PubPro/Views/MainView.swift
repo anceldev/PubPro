@@ -11,42 +11,43 @@ import SwiftData
 struct MainView: View {
     //    @Environment(AuthenticationViewModel.self) var viewModel
     
-    @State var viewModel = UserViewModel()
-    //    @State var viewModel: UserViewModel
+    @State var userViewModel = UserViewModel()
+    @State var itemsViewModel = ItemsViewModel()
     
     var body: some View {
         TabView {
-            if viewModel.user.role == .admin {
-                ScannerView()
+            if userViewModel.user.role == .admin {
+                ScannerView(drinks: itemsViewModel.drinks, rewards: itemsViewModel.rewards)
                     .tabItem { Label("Scanner", systemImage: "qrcode.viewfinder") }
             }
             else {
-                Profile(user: viewModel.user)
+                Profile(user: userViewModel.user)
                     .tabItem { Label("Profile", systemImage: "person") }
                 //                .environment(authVM)
-                HistoryView(movements: viewModel.user.movements)
+                HistoryView(movements: userViewModel.user.movements)
                     .tabItem { Label("History", systemImage: "list.bullet") }
             }
-            DrinksList()
+            DrinksList(drinks: itemsViewModel.drinks)
                 .tabItem { Label("Drinks", systemImage: "wineglass") }
-            RewardsList()
+            RewardsList(rewards: itemsViewModel.rewards)
                 .tabItem { Label("Rewards", systemImage: "gift.fill") }
-            SettingsView()
+            SettingsView(userViewModel: $userViewModel)
                 .tabItem { Label("Settings", systemImage: "gear") }
                 .toolbarBackground(Color.ppDark)
             
         }
         .tint(.beerOrange)
-        
     }
 }
 #Preview {
-    let userViewModel = UserViewModel()
-    userViewModel.user.role = .user
-    return MainView(viewModel: userViewModel)
+//    let userViewModel = UserViewModel()
+//    userViewModel.user.role = .user
+//    return MainView()
+    MainView()
 }
 #Preview {
-    let adminViewModel = UserViewModel()
-    adminViewModel.user.role = .admin
-    return MainView(viewModel: adminViewModel)
+//    let adminViewModel = UserViewModel()
+//    adminViewModel.user.role = .admin
+//    return MainView()
+    MainView()
 }

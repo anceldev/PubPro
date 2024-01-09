@@ -94,7 +94,7 @@ extension String {
     }
 }
 
-
+ 
 //@Model
 //class Reward: Item, Codable {
 ////    @Attribute(.unique) var id: String
@@ -116,3 +116,19 @@ extension String {
 //        self.lastUpdate = lastUpdate
 //    }
 //}
+//            Button("Write drinks DB") {
+//                if Repositories.updateItemsDB(for: Drink.drinks, collection: "drinksDataBase") {
+//                    print("Drinks DB updated")
+//                } else {
+//                    print("Couldn't update drinks DB")
+//                }
+//            }
+//            Spacer()
+//            Button("Write rewards DB") {
+//                if Repositories.updateItemsDB(for: Reward.rewards, collection: "rewardsDataBase") {
+//                    print("Rewards database upadted")
+//                } else {
+//                    print("Couldn't update rewards database")
+//                }
+//            }
+//                Spacer()

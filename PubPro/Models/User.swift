@@ -16,7 +16,7 @@ struct User: Codable, Identifiable {
     var phone: String
     var role: Role
     var movements: [Movement]
-    var points: Int = 60
+    var points: Int = 60 // Defaul 60 points for each user. This value will be overwrite when user loads iots data
     var lastUpdateDrinks: Date? = nil
     var lastUpdateRewards: Date? = nil
     

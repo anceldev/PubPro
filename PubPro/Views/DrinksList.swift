@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DrinksList: View {
-    let drinks = Drink.drinks
+    let drinks: [Drink]
     var body: some View {
         VStack {
             VStack {
@@ -27,5 +27,5 @@ struct DrinksList: View {
 }
 
 #Preview {
-    DrinksList()
+    DrinksList(drinks: Drink.drinks)
 }

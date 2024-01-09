@@ -25,7 +25,7 @@ struct Profile: View {
             VStack{
                 Text("Welcome")
                     .font(.custom("RobotoCondensed-Regular", size: 32))
-                Text(user.name)
+                Text(user.name.isEmpty ? user.email : user.name)
                     .font(.custom("RobotoCondensed-Black", size: 32))
                 Text("You have")
                     .font(.custom("RobotoCondensed-Medium", size: 18))
@@ -57,6 +57,7 @@ struct Profile: View {
 
         }
         .padding(.top, 33)
+        .background(.ppDarkWhite)
         .onAppear(perform: {
             generateQRCode()
         })

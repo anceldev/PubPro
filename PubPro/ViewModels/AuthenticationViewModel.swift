@@ -118,6 +118,28 @@ final class AuthenticationViewModel: ObservableObject{
         }
     }
     /**
+     Update user's profile data
+     */
+    func userProfileChangeRequest(username: String) -> Bool {
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = username
+        // Updates change in authenticaiton profile
+        changeRequest?.commitChanges(completion: { error in
+            if let error = error {
+                print("Cannot update changes now, try again later. \(String(describing: error.localizedDescription))")
+            }
+        })
+        // Updates change in Firestore user document associated
+        guard let documentID = user?.uid else { return false }
+        let docReference = Firestore.firestore().collection("users_v1.1").document(documentID)
+        docReference.updateData(["name": username]) { error in
+            if let error = error {
+                print("Cannot find user associated document. Contact with Admin.\(String(describing: error.localizedDescription))")
+            }
+        }
+        return true
+    }
+    /**
      Sign out user account
      */
     func signOut() {
@@ -148,13 +170,6 @@ extension AuthenticationViewModel {
         }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-        
-        //        guard let windowScene = await UIApplication.shared.connectedScenes.first as? UIWindowScene,
-        //              let window = await windowScene.windows.first,
-        //              let rootViewController = await window.rootViewController else {
-        //            print("There is no root view controller")
-        //            return false
-        //        }
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first,
               let rootViewController = window.rootViewController else {
@@ -171,6 +186,7 @@ extension AuthenticationViewModel {
             let credential = GoogleAuthProvider.credential(withIDToken: idToken.tokenString, accessToken: accessToken.tokenString)
             let result = try await Auth.auth().signIn(with: credential)
             let firebaseUser = result.user
+            displayName = firebaseUser.displayName ?? "No name"
             print("User \(firebaseUser.uid) signed in with email \(firebaseUser.email ?? "unknown")")
             authenticationState = .authenticated
             
@@ -257,12 +273,13 @@ extension AuthenticationViewModel {
         }
     }
 }
+// MARK: Create document for new user
 extension AuthenticationViewModel {
     /**
      Creates new User document in Firestore database
      */
     func createUserDocument(email: String) {
-        let newUser = User(email: email, role: .user, movements: [Movement(itemID: UUID(), date: .now)])
+        let newUser = User(name: displayName, email: email, role: .user)
         guard let documentId = user?.uid else { return }
         let documentRef = Firestore.firestore().collection("users_v1.1").document(documentId)
         
@@ -281,7 +298,7 @@ extension AuthenticationViewModel {
         }
     }
 }
-
+// MARK: Utilities for Apple authentication
 extension AuthenticationViewModel {
     /**
      Random nonce string generator function

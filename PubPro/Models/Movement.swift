@@ -9,17 +9,11 @@ import Foundation
 
 struct Movement: Codable, Identifiable{
     var id: UUID
-//    var drink: String
-//    var points: Int
     var itemID: UUID
-//    var value: Int
     var date: Date
     
-    init(itemID: UUID, points: Int = 0, date: Date = .now) {
-//        self.drinkID = drinkID
-        self.id = UUID()
-//        self.drink = drink
-//        self.points = points
+    init(id: UUID = UUID(), itemID: UUID, date: Date = .now) {
+        self.id = id
         self.itemID = itemID
         self.date = date
     }

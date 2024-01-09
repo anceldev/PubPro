@@ -23,47 +23,55 @@ class Repositories {
             return User.empty
         }
     }
-    static func addMovement(drink: Item, uid: String) async throws -> Bool {
-//        let movement = Movement(drink: drink.name, points: drink.value, date: .now)
-//        do {
-//            let document = docReference.collection("users_v1").document(uid)
-//            try await document.updateData([
-//                "movements": FieldValue.arrayUnion([movement])
-//            ])
-//            return true
-//        }
-//        catch {
-//            print("Error in addMovement func.")
-//            return false
-//        }
+    /**
+     Add a new movement to a user document.
+     */
+    static func addMovement(for item: Item, with uid: String) async throws -> Bool {
+        do {
+            let user = try await docReference.collection("users_v1.1").document(uid).getDocument(as: User.self)
+            var movements = user.movements
+            let newMovement = Movement(itemID: item.id)
+            movements.append(newMovement)
+            movements.sort { $0.date > $1.date }
+            print(movements)
+            
+            let newMovementObject = [
+                "
+            ]
+            
+            let userDocReference = docReference.collection("users_v1.1").document(uid)
+            do {
+                try await userDocReference.updateData(["movements": movements])
+            }
+            catch {
+                print("Cannot update movements field in user doc. \(error.localizedDescription)")
+                throw error
+            }
+        }
+        catch {
+            print("Error adding new movement")
+            return false
+        }
         return true
     }
+    /**
+     Fetch drinks from database
+     */
     static func fetchDrinks() async throws -> [Drink] {
-        let documentsSnapshot = try await docReference.collection("drinks").getDocuments()
+        let documentsSnapshot = try await docReference.collection("drinksDataBase").getDocuments()
         return documentsSnapshot.documents.compactMap { document in
             try! document.data(as: Drink.self)
         }
     }
+    /**
+     Fetch rewards from databas
+     */
     static func fetchRewards() async throws -> [Reward] {
-        let documentsSnapshot = try await docReference.collection("drinks").getDocuments()
+        let documentsSnapshot = try await docReference.collection("rewardsDataBase").getDocuments()
         return documentsSnapshot.documents.compactMap { document in
             try! document.data(as: Reward.self)
         }
     }
-//    static func updateDrinks() -> Bool{
-//        let ref = docReference.collection("drinksDataBase")
-//        for drink in Drink.drinks {
-//            let drinkDocReference = ref.document(drink.id.uuidString)
-//            do {
-//                try drinkDocReference.setData(from: drink)
-//            }
-//            catch {
-//                print(["[updateDrinks] Cannot write to drinks DB"])
-//                return false
-//            }
-//        }
-//        return true
-//    }
     static func updateItemsDB<T:Item>(for items: [T], collection: String) -> Bool {
         let ref = docReference.collection(collection)
         for item in items {

@@ -7,9 +7,31 @@
 
 import Foundation
 import Observation
-//@MainActor
-//class ItemsViewModel: ObservableObject {
-//    
-//}
 
+@Observable
+
+class ItemsViewModel {
+    var drinks = [Drink]()
+    var rewards = [Reward]()
+    
+    init() {
+        do {
+            try fetchDBItems()
+        }
+        catch {
+            print("Cannot initialize Items from constructor")
+        }
+    }
+    private func fetchDBItems() throws{
+        Task {
+            do {
+                self.drinks = try await Repositories.fetchDrinks()
+                self.rewards = try await Repositories.fetchRewards()
+            }
+            catch {
+                print("[ItemsViewModel] Cannot fetch items")
+            }
+        }
+    }
+}
 

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RewardsList: View {
     
-    var items = Reward.rewards
+    let rewards: [Reward]
     
     var body: some View {
         VStack {
@@ -17,7 +17,7 @@ struct RewardsList: View {
                 TitleView(title: "Rewards")
             }
             .padding(33)
-            ForEach(items, id: \.id) { item in
+            ForEach(rewards, id: \.id) { item in
                 ItemRow(item: item)
             }
             .padding(.horizontal, 15)
@@ -29,5 +29,5 @@ struct RewardsList: View {
 }
 
 #Preview {
-    RewardsList()
+    RewardsList(rewards: Reward.rewards)
 }
