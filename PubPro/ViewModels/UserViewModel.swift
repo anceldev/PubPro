@@ -77,4 +77,13 @@ class UserViewModel{
             }
         }
     }
+    /**
+     Call to manager to store user avatar
+     */
+    func requestAvatarChange(uiImage: UIImage) -> Bool {
+        if StorageManager.uploadAvatar(image: uiImage) {
+            return true
+        }
+        return false
+    }
 }

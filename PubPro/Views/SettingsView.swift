@@ -5,6 +5,7 @@
 //  Created by Ancel Dev account on 19/12/23.
 //
 
+import PhotosUI
 import SwiftUI
 
 struct SettingsView: View {
@@ -14,6 +15,10 @@ struct SettingsView: View {
     @State var userName: String = ""
     @State private var confirmChanges = false
     
+    @State private var image = UIImage()
+    @State private var showImagePicker = false
+    @State private var showCameraPicker = false
+    
     var body: some View {
         VStack {
             VStack {
@@ -21,14 +26,30 @@ struct SettingsView: View {
                     TitleView(title: "Settings")
                 }
                 .padding(33)
-                Spacer()
-                
                 VStack {
-                    Text("Update your profile data:")
-                    TextField("Username", text: $userName)
+                    Image(uiImage: self.image)
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 50))
+                        .frame(width: 200, height: 200)
+                        .background(Color.gray.opacity(0.2))
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(Circle())
+                    HStack {
+                        Button("Chose avatar") {
+                            showImagePicker.toggle()
+                            showCameraPicker = false
+                        }
+                        Button("Take a photo") {
+                            showImagePicker = false
+                            showCameraPicker.toggle()
+                        }
+                    }
+                    .buttonStyle(.bordered)
                 }
                 .padding(.horizontal, 15)
                 Spacer()
+                Text("Update your profile data:")
+                TextField("Username", text: $userName)
                 Button("Update", action: updateProfileData)
                     .buttonStyle(.borderedProminent)
                     .confirmationDialog("Change profile", isPresented: $confirmChanges, actions: {
@@ -45,6 +66,12 @@ struct SettingsView: View {
                     .foregroundStyle(.red.opacity(0.7))
             }
         }
+        .sheet(isPresented: $showImagePicker, content: {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
+        })
+        .sheet(isPresented: $showCameraPicker, content: {
+            ImagePicker(sourceType: .camera, selectedImage: self.$image)
+        })
         .background(.ppDarkWhite)
     }
     private func signOutAccount() {
@@ -54,7 +81,9 @@ struct SettingsView: View {
         
     }
     private func updateProfileData() {
-        self.confirmChanges = authViewModel.userProfileChangeRequest(username: userName)
+        let nameRequest = authViewModel.userProfileChangeRequest(username: userName)
+        let photoRequest = userViewModel.requestAvatarChange(uiImage: image)
+//        self.confirmChanges = authViewModel.userProfileChangeRequest(username: userName)
         userViewModel.user.name = userName // Update name locally for this sesion
     }
 }
