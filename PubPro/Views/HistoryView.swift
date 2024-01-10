@@ -9,7 +9,8 @@ import SwiftUI
 
 struct HistoryView: View {
     
-    let movements: [Movement]
+    @Environment(ItemsViewModel.self) var itemsViewModel
+    @Environment(UserViewModel.self) var userViewModel
     
     var body: some View {
         VStack {
@@ -17,11 +18,26 @@ struct HistoryView: View {
                 TitleView(title: "History Points")
             }
             .padding(33)
-            ForEach(movements) { movement in
-                ItemRow(item: Drink.drinks.first(where: { movement.itemID == $0.id })!)
-                    .padding(15)
+        
+            ScrollView(.vertical) {
+                VStack{
+                    if !userViewModel.user.movements.isEmpty {
+                        ForEach(userViewModel.user.movements) { movement in
+                            ItemRow(item: itemsViewModel.getItem(for: movement.itemID))
+                        }
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 3)
+                    } else {
+                        VStack {
+                            Text("You dont have any movements at the moment")
+                                .font(.custom("RobotoCondensed-Regular", size: 38))
+                                .foregroundStyle(.beerOrange)
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding(15)
+                    }
+                }
             }
-            .listStyle(.inset)
             Spacer()
         }
         .background(.ppDarkWhite)
@@ -29,5 +45,7 @@ struct HistoryView: View {
 }
 
 #Preview {
-    HistoryView(movements: User.empty.movements)
+    return HistoryView()
+        .environment(ItemsViewModel())
+        .environment(UserViewModel())
 }

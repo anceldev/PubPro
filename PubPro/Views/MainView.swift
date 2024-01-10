@@ -19,12 +19,16 @@ struct MainView: View {
             if userViewModel.user.role == .admin {
                 ScannerView(drinks: itemsViewModel.drinks, rewards: itemsViewModel.rewards)
                     .tabItem { Label("Scanner", systemImage: "qrcode.viewfinder") }
+                    .environment(itemsViewModel)
             }
             else {
-                Profile(user: userViewModel.user)
+                Profile()
                     .tabItem { Label("Profile", systemImage: "person") }
+                    .environment(userViewModel)
                 //                .environment(authVM)
-                HistoryView(movements: userViewModel.user.movements)
+                HistoryView()
+                    .environment(itemsViewModel)
+                    .environment(userViewModel)
                     .tabItem { Label("History", systemImage: "list.bullet") }
             }
             DrinksList(drinks: itemsViewModel.drinks)

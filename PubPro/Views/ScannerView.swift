@@ -10,17 +10,12 @@ import SwiftUI
 
 struct ScannerView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @Environment(ItemsViewModel.self) var itemsViewModel
     @State var isPresentingScanner = false
     @State var scannedCode: String = ""
     
     let drinks: [Drink]
     let rewards: [Reward]
-    
-    //    var drinks: [Drink] = [
-    //        Drink(name: "Cóctel", descriptionItem: "Description of cóctel", value: 50),
-    //        Drink(name: "Cachimba", descriptionItem: "Description of cachimba", value: 100),
-    //        Drink(name: "Combinado", descriptionItem: "Description of combinado", value: 70)
-    //    ]
     
     @State private var buttonsBar: ButtonsBar = .none
     
@@ -28,6 +23,17 @@ struct ScannerView: View {
         case drinks
         case rewards
         case none
+        
+        var color: Color {
+            switch self {
+            case .drinks:
+                Color.beerOrange
+            case .rewards:
+                Color.ppGreen
+            case .none:
+                Color.ppDarkWhite
+            }
+        }
     }
     
     var scannerSheet: some View {
@@ -62,11 +68,17 @@ struct ScannerView: View {
                             VStack {
                                 Button("Give Points") {
                                     withAnimation {
+                                        if !(buttonsBar == .drinks) {
+                                            buttonsBar = .none
+                                        }
                                         buttonsBar = .drinks
                                     }
                                 }
                                 Button("Give Rewards") {
                                     withAnimation{
+                                        if !(buttonsBar == .rewards) {
+                                            buttonsBar = .none
+                                        }
                                         buttonsBar = .rewards
                                     }
                                 }
@@ -99,11 +111,27 @@ struct ScannerView: View {
     func DynamicButtonsBar<T:Item>(items: [T]) -> some View{
         HStack {
             ForEach(items, id: \.id) { item in
-                Button(item.name) {
+                
+                Button {
                     self.givePoints(for: item)
+                } label: {
+                    HStack{
+                        Spacer()
+                        Text(item.name)
+                            .font(.system(size: 12))
+                        Spacer()
+                    }
                 }
                 .buttonStyle(.borderedProminent)
+                .tint(buttonsBar.color)
                 .frame(maxWidth: .infinity)
+                
+//                Button(item.name) {
+//                    self.givePoints(for: item)
+//                }
+//                .buttonStyle(.borderedProminent)
+//                .tint(buttonsBar.color)
+//                .frame(maxWidth: .infinity)
             }
         }
         .padding(.horizontal, 15)
@@ -112,13 +140,14 @@ struct ScannerView: View {
         print("Adding \(item.value) points to \(scannedCode)")
         Task {
             do {
-                let completed = try await Repositories.addMovement(for: item, with: scannedCode)
-                if completed {
+                let completed = try await Repositories.addMovement(for: item, with: scannedCode, itemsList: itemsViewModel)
+                if completed.0 {
                     print("Movement added")
                 }
                 else {
                     print("Something went wrong, we couldnt add the movement.")
                 }
+                print(completed.1)
             }
             catch {
                 print("Error after Repositories.addMovement")
@@ -129,4 +158,5 @@ struct ScannerView: View {
 
 #Preview {
     ScannerView(drinks: [], rewards: [])
+        .environment(ItemsViewModel())
 }

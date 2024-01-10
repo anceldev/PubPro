@@ -13,6 +13,7 @@ import Observation
 class ItemsViewModel {
     var drinks = [Drink]()
     var rewards = [Reward]()
+    var itemsList = [UUID]()
     
     init() {
         do {
@@ -22,11 +23,20 @@ class ItemsViewModel {
             print("Cannot initialize Items from constructor")
         }
     }
+    func getItem(for itemID: UUID) -> Item {
+        if let isDrink = drinks.first(where: { $0.id == itemID }) {
+            return isDrink
+        } else {
+            return rewards.first(where: { $0.id == itemID })!
+        }
+    }
     private func fetchDBItems() throws{
         Task {
             do {
                 self.drinks = try await Repositories.fetchDrinks()
                 self.rewards = try await Repositories.fetchRewards()
+                self.itemsList = self.drinks.map({ $0.id })
+                self.itemsList += self.rewards.map({ $0.id })
             }
             catch {
                 print("[ItemsViewModel] Cannot fetch items")

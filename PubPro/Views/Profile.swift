@@ -12,8 +12,9 @@ import QRCode
 struct Profile: View {
     
     @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @Environment(UserViewModel.self) var userViewModel
     
-    var user: User
+//    var user: User
     @State var myQR: Image?
     
     var body: some View {
@@ -25,12 +26,12 @@ struct Profile: View {
             VStack{
                 Text("Welcome")
                     .font(.custom("RobotoCondensed-Regular", size: 32))
-                Text(user.name.isEmpty ? user.email : user.name)
+                Text(userViewModel.user.name.isEmpty ? userViewModel.user.email : userViewModel.user.name)
                     .font(.custom("RobotoCondensed-Black", size: 32))
                 Text("You have")
                     .font(.custom("RobotoCondensed-Medium", size: 18))
                     .foregroundStyle(.beerOrange)
-                Text("\(user.points)")
+                Text("\(userViewModel.user.points)")
                     .foregroundStyle(.ppDark)
                     .font(.custom("RobotoCondensed-Black", size: 70))
                 Text("Points")
@@ -58,23 +59,24 @@ struct Profile: View {
         }
         .padding(.top, 33)
         .background(.ppDarkWhite)
-        .onAppear(perform: {
+        .onAppear {
+            userViewModel.suscribe()
             generateQRCode()
-        })
+        }
     }
     func signOutAccout() {
         authViewModel.signOut()
     }
     func generateQRCode() {
-        guard let uiImageQR = try? QRCode(string: user.id ?? "No image", size: CGSize(width: 400, height: 400))?.image() else {
+        guard let uiImageQR = try? QRCode(string: userViewModel.user.id ?? "No image", size: CGSize(width: 400, height: 400))?.image() else {
             fatalError("Can't generate QR code")
         }
         self.myQR = Image(uiImage: uiImageQR)
-        print(user.id)
+//        print(userViewModel.user.id ?? "Empty user name")
     }
 }
 
 #Preview {
-    Profile(user: User.empty)
+    Profile()
         .environmentObject(AuthenticationViewModel())
 }

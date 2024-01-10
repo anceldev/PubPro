@@ -19,9 +19,34 @@ class UserViewModel{
     private var userFirestore: FirebaseAuth.User?
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     
+    private var listenerRegistration: ListenerRegistration?
+    
     init(){
         registerAuthStateHandler()
     }
+    
+    func suscribe() {
+        guard let docID = user.id else { return }
+        let ref = Firestore.firestore().collection("users_v1.1").document(docID)
+        
+        if listenerRegistration == nil {
+            listenerRegistration = ref.addSnapshotListener({ snapshotDoc, error in
+                guard snapshotDoc != nil else { return }
+                do {
+                    if let document = try snapshotDoc?.data(as: User.self){
+                        self.user = document
+                    }
+                    else {
+                        print("Cannot decode document in User type")
+                    }
+                }
+                catch {
+                    print("Error listening document")
+                }
+            })
+        }
+    }
+    
     /**
      Registers AuthStateDidChangeListenerHandle to get current user signed in
      */
@@ -46,10 +71,6 @@ class UserViewModel{
         Task {
             do {
                 self.user = try await Repositories.fetchUser(id: self.user.id!)
-                print("Your role is: \(self.user.role.rawValue)")
-                for movement in user.movements {
-                    print(movement)
-                }
             }
             catch {
                 fatalError("getUser() function can get user from Repositories.fetchUser")

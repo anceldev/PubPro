@@ -26,33 +26,43 @@ class Repositories {
     /**
      Add a new movement to a user document.
      */
-    static func addMovement(for item: Item, with uid: String) async throws -> Bool {
+    static func addMovement(for item: Item, with uid: String, itemsList: ItemsViewModel) async throws -> (Bool, String) {
+        var outMessage = ""
         do {
-            let user = try await docReference.collection("users_v1.1").document(uid).getDocument(as: User.self)
-            var movements = user.movements
-            let newMovement = Movement(itemID: item.id)
-            movements.append(newMovement)
-            movements.sort { $0.date > $1.date }
-            print(movements)
+            var user = try await docReference.collection("users_v1.1").document(uid).getDocument(as: User.self)
+            user.movements.append(Movement(itemID: item.id))
+            user.movements.sort { $0.date > $1.date }
             
-            let newMovementObject = [
-                "
-            ]
-            
-            let userDocReference = docReference.collection("users_v1.1").document(uid)
+            if let isDrinkItem = itemsList.drinks.first(where: { $0.id == item.id }) {
+                user.points += isDrinkItem.value
+                outMessage = "Points added succesfully"
+            } else if let isRewardItem = itemsList.rewards.first(where: { $0.id == item.id }) {
+                if user.points < isRewardItem.value {
+                    outMessage = "User doesn't have enough points for this reward"
+                    return (false, outMessage)
+                } else {
+                    user.points -= isRewardItem.value
+                    outMessage = "Reward changed succesfully"
+                }
+            } else {
+                outMessage = "Wrong Item.id reference, couldn't found in Drinks or Rewards database."
+                return (false, outMessage)
+            }
+            // Updates document
             do {
-                try await userDocReference.updateData(["movements": movements])
+                try docReference.collection("users_v1.1").document(user.id!).setData(from: user)
+                print("Document overwritten")
             }
             catch {
-                print("Cannot update movements field in user doc. \(error.localizedDescription)")
-                throw error
+                print(error.localizedDescription)
+                return (false, outMessage)
             }
         }
         catch {
             print("Error adding new movement")
-            return false
+            return (false, outMessage)
         }
-        return true
+        return (true, outMessage)
     }
     /**
      Fetch drinks from database

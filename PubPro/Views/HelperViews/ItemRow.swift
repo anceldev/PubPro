@@ -7,22 +7,18 @@
 
 import SwiftUI
 
+/**
+ Recives an item and creates its color.
+ */
 struct ItemRow: View {
     
-//    let movement: Movement
     let item: Item
     let colorItem: Color
     
-//    init(movement: Movement) {
-//        self.movement = movement
     init(item: Item){
         self.item = item
-        if item is Drink{
-            self.colorItem = Color.beerOrange
-        }
-        else {
-            self.colorItem = Color.ppGreen
-        }
+        if item is Drink{ self.colorItem = Color.beerOrange }
+        else { self.colorItem = Color.ppGreen }
     }
     
     var body: some View {
@@ -47,13 +43,10 @@ struct ItemRow: View {
             .padding(3)
             Spacer()
             HStack(alignment: .center) {
-                
-                
                 VStack(alignment: .trailing) {
                     Text("\(item.value)")
                         .foregroundStyle(colorItem)
                         .font(.custom("RobotoCondensed-Black", size: 48))
-                    
                 }
                 .padding(.trailing, 12)
             }
@@ -62,7 +55,6 @@ struct ItemRow: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .frame(maxWidth: .infinity)
         .padding(0)
-        
     }
 }
 
