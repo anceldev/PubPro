@@ -19,25 +19,40 @@ struct MainView: View {
             if userViewModel.user.role == .admin {
                 ScannerView(drinks: itemsViewModel.drinks, rewards: itemsViewModel.rewards)
                     .tabItem { Label("Scanner", systemImage: "qrcode.viewfinder") }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Color.ppDark, for: .tabBar)
                     .environment(itemsViewModel)
+                    .environment(userViewModel)
             }
             else {
                 Profile()
                     .tabItem { Label("Profile", systemImage: "person") }
-                    .environment(userViewModel)
-                //                .environment(authVM)
-                HistoryView()
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Color.ppDark, for: .tabBar)
                     .environment(itemsViewModel)
                     .environment(userViewModel)
+
+                HistoryView()
                     .tabItem { Label("History", systemImage: "list.bullet") }
+                    .toolbarBackground(.visible, for: .tabBar)
+                    .toolbarBackground(Color.ppDark, for: .tabBar)
+                    .environment(itemsViewModel)
+                    .environment(userViewModel)
             }
             DrinksList(drinks: itemsViewModel.drinks)
                 .tabItem { Label("Drinks", systemImage: "wineglass") }
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(Color.ppDark, for: .tabBar)
+            
             RewardsList(rewards: itemsViewModel.rewards)
                 .tabItem { Label("Rewards", systemImage: "gift.fill") }
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(Color.ppDark, for: .tabBar)
+            
             SettingsView(userViewModel: $userViewModel)
                 .tabItem { Label("Settings", systemImage: "gear") }
-                .toolbarBackground(Color.ppDark)
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(Color.ppDark, for: .tabBar)
             
         }
         .tint(.beerOrange)
@@ -46,12 +61,6 @@ struct MainView: View {
 #Preview {
 //    let userViewModel = UserViewModel()
 //    userViewModel.user.role = .user
-//    return MainView()
-    MainView()
-}
-#Preview {
-//    let adminViewModel = UserViewModel()
-//    adminViewModel.user.role = .admin
 //    return MainView()
     MainView()
 }

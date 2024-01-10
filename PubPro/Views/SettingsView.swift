@@ -66,6 +66,7 @@ struct SettingsView: View {
                     .foregroundStyle(.red.opacity(0.7))
             }
         }
+        .onAppear(perform: getAvatarImage)
         .sheet(isPresented: $showImagePicker, content: {
             ImagePicker(sourceType: .photoLibrary, selectedImage: self.$image)
         })
@@ -77,14 +78,23 @@ struct SettingsView: View {
     private func signOutAccount() {
         authViewModel.signOut()
     }
-    private func updateDrinksDB() {
-        
+    private func getAvatarImage() {
+        StorageManager.downloadAvatar(uidUser: userViewModel.user.id!) { image in
+            if let uiImage = image {
+                self.image = uiImage
+            } else {
+                print("Cant use image")
+            }
+        }
     }
     private func updateProfileData() {
         let nameRequest = authViewModel.userProfileChangeRequest(username: userName)
         let photoRequest = userViewModel.requestAvatarChange(uiImage: image)
-//        self.confirmChanges = authViewModel.userProfileChangeRequest(username: userName)
-        userViewModel.user.name = userName // Update name locally for this sesion
+        
+        if nameRequest && photoRequest {
+            self.confirmChanges = true
+            userViewModel.user.name = userName // Update name locally for this sesion
+        }
     }
 }
 

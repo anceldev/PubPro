@@ -13,6 +13,7 @@ struct ScannerView: View {
     @Environment(ItemsViewModel.self) var itemsViewModel
     @State var isPresentingScanner = false
     @State var scannedCode: String = ""
+    @State var confirmationGivePoints = false
     
     let drinks: [Drink]
     let rewards: [Reward]
@@ -65,6 +66,7 @@ struct ScannerView: View {
                     }
                     else {
                         VStack {
+                            Spacer()
                             VStack {
                                 Button("Give Points") {
                                     withAnimation {
@@ -74,6 +76,7 @@ struct ScannerView: View {
                                         buttonsBar = .drinks
                                     }
                                 }
+                                .tint(.beerOrange)
                                 Button("Give Rewards") {
                                     withAnimation{
                                         if !(buttonsBar == .rewards) {
@@ -82,10 +85,11 @@ struct ScannerView: View {
                                         buttonsBar = .rewards
                                     }
                                 }
+                                .tint(.ppGreen)
                             }
                             .font(.title)
                             .buttonStyle(.borderedProminent)
-                            .tint(.beerOrange)
+                            
                             VStack {
                                 switch buttonsBar {
                                 case .drinks:
@@ -96,6 +100,8 @@ struct ScannerView: View {
                                     Text("Select an Action")
                                 }
                             }
+                            Spacer()
+                            Button("Reset Scanner", action: resetScanner)
                         }
                     }
                     Spacer()
@@ -106,6 +112,14 @@ struct ScannerView: View {
             }
             .background(.ppDarkWhite)
         }
+        .confirmationDialog("Succes", isPresented: $confirmationGivePoints) {
+            Button("Ok") {
+                self.confirmationGivePoints = false
+            }
+        } message: {
+            Text("The points has been given succesfully to the user")
+        }
+
     }
     @ViewBuilder
     func DynamicButtonsBar<T:Item>(items: [T]) -> some View{
@@ -125,13 +139,6 @@ struct ScannerView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(buttonsBar.color)
                 .frame(maxWidth: .infinity)
-                
-//                Button(item.name) {
-//                    self.givePoints(for: item)
-//                }
-//                .buttonStyle(.borderedProminent)
-//                .tint(buttonsBar.color)
-//                .frame(maxWidth: .infinity)
             }
         }
         .padding(.horizontal, 15)
@@ -143,15 +150,21 @@ struct ScannerView: View {
                 let completed = try await Repositories.addMovement(for: item, with: scannedCode, itemsList: itemsViewModel)
                 if completed.0 {
                     print("Movement added")
+                    self.confirmationGivePoints.toggle()
                 }
                 else {
                     print("Something went wrong, we couldnt add the movement.")
                 }
-                print(completed.1)
             }
             catch {
                 print("Error after Repositories.addMovement")
             }
+        }
+    }
+    private func resetScanner() {
+        withAnimation {
+            self.buttonsBar = .none
+            self.scannedCode = ""
         }
     }
 }

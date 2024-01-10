@@ -5,41 +5,36 @@
 //  Created by Ancel Dev account on 26/11/23.
 //
 
-import QRCode
 import SwiftUI
 
 struct ContentView: View {
-    
-//    let qr = QRCode(string: "1")
-    let qr = QRCode(string: "asdpuasndasdm", size: CGSize(width: 400, height: 400))!
-
-    @State var img: Image?
-    @State var showImage = false
-
-    var body: some View {
-        VStack {
-            VStack {
-                if showImage {
-                    img!
-                        .resizable()
-                        //.frame(width: 300, height: 300)
-                }
-            }
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello")
-            Button("Generate QR") {
-                // Q
-                let myQR: UIImage? = try? qr.image()
-                if let uiImage = myQR {
-                    img = Image(uiImage: uiImage)
-                }
-                showImage.toggle()
-            }
+  var body: some View {
+    TabView {
+      Text("First Tab")
+        .tabItem {
+          Image(systemName: "1.square.fill")
+          Text("First")
         }
-        .padding()
+        .tag(1)
+        .toolbarBackground(.hidden, for: .tabBar)
+
+      Text("Second Tab")
+        .tabItem {
+          Image(systemName: "2.square.fill")
+          Text("Second")
+        }
+        .tag(2)
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarBackground(Color.orange.opacity(0.8), for: .tabBar)
+
+      Text("Third Tab")
+        .tabItem {
+          Image(systemName: "3.square.fill")
+          Text("Third")
+        }
+        .tag(3)
     }
+  }
 }
 
 #Preview {

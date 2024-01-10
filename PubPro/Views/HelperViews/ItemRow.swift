@@ -44,7 +44,9 @@ struct ItemRow: View {
             Spacer()
             HStack(alignment: .center) {
                 VStack(alignment: .trailing) {
-                    Text("\(item.value)")
+                    let sign = item is Drink ? "+" : "-"
+                    
+                    Text("\(sign)\(item.value)")
                         .foregroundStyle(colorItem)
                         .font(.custom("RobotoCondensed-Black", size: 48))
                 }

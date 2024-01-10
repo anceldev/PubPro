@@ -79,4 +79,5 @@ struct Profile: View {
 #Preview {
     Profile()
         .environmentObject(AuthenticationViewModel())
+        .environment(UserViewModel())
 }
