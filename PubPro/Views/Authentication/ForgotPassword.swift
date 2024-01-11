@@ -15,8 +15,6 @@ struct ForgotPassword: View {
     var body: some View {
         VStack {
             VStack {
-                
-                
                 Spacer()
                 Spacer()
                 VStack {
