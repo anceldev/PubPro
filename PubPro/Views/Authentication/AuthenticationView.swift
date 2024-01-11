@@ -16,7 +16,7 @@ struct AuthenticationView: View {
         VStack {
             switch authViewModel.flow {
             case .login:
-                LoginView()
+                SignInView()
 //                    .environment(authViewModel)
             case .signUp:
                 SignUpView()

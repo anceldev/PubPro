@@ -18,7 +18,7 @@ struct Home: View {
                     .multilineTextAlignment(.center)
                     .padding(.top, 20)
                 NavigationLink {
-                    LoginView()
+                    SignInView()
                         .navigationBarBackButtonHidden(true)
                 } label: {
                     Text("Next")

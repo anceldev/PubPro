@@ -18,17 +18,29 @@ struct AuthenticatedView: View {
         VStack{
             switch viewModel.authenticationState {
             case .unauthenticated:
-                Spacer()
-                Text("PubPro")
-                    .font(.largeTitle)
-                Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged")
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 20)
-                Button("Login") {
-                    loginScreen.toggle()
+                VStack {
+                    Spacer()
+                    VStack {
+                        VStack(alignment: .center) {
+                            Text("PubPro")
+                                .font(.custom("Styleturn", size: 80))
+                                .padding(.bottom, 70)
+                                .foregroundStyle(.beerOrange)
+                            Text("Welcome to PubPro, the app where you can accumulate points in your favourte pub and access to incredible rewards")
+                                .font(.custom("RobotoCondensed-Light", size: 25))
+                                .lineSpacing(8)
+                                .multilineTextAlignment(.center)
+                                .foregroundStyle(.ppDarkWhite)
+                            Button("Login") {
+                                loginScreen.toggle()
+                            }
+                            .foregroundStyle(.beerYellow)
+                            .padding(.top, 20)
+                        }
+                        .padding(30)
+                    }
+                   Spacer()
                 }
-                Spacer()
-                Spacer()
             case .authenticating:
                 ProgressView()
             case .authenticated:
@@ -36,6 +48,7 @@ struct AuthenticatedView: View {
 //                    .environment(authVM)
             }
         }
+        .background(.ppDark)
         .sheet(isPresented: $loginScreen) {
             AuthenticationView()
 //                .environment(authVM)

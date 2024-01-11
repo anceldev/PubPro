@@ -22,36 +22,47 @@ struct SignUpView: View {
     @State private var alertOn = false
     
     var body: some View {
-
         VStack {
-            Spacer()
-            Spacer()
-            Text("Register")
-                .font(.largeTitle)
-            Spacer()
-            TextField("Email", text: $email, prompt: Text("Email"))
-                .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
-            SecureField("Password", text: $password, prompt: Text("Password"))
-            SecureField("Confirm Password", text: $confirmPassword, prompt: Text("Confirm Password"))
-            
-            Button(action: signUpWithEmailPassword) {
+            VStack {
+                Spacer()
+                Spacer()
                 Text("Register")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .foregroundStyle(.ownDarkGray).bold()
-            }
-            .buttonStyle(.bordered)
-            Button("Already have account?") {
-                withAnimation {
-                    authViewModel.flow = .login
+                    .font(.custom("RobotoCondensed-Regular", size: 50))
+                    .foregroundStyle(.beerOrange)
+                Spacer()
+                TextField("Email", text: $email, prompt: Text("Email"))
+                    .ownTfStyle()
+                    .padding(.bottom, 8)
+
+                SecureField("Password", text: $password, prompt: Text("Password"))
+                    .ownTfStyle()
+                    .padding(.bottom, 8)
+                SecureField("Confirm Password", text: $confirmPassword, prompt: Text("Confirm Password"))
+                    .ownTfStyle()
+                    .padding(.bottom, 30)
+                
+                Button(action: signUpWithEmailPassword) {
+                    Text("Sign Up")
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 8)
+                        .foregroundStyle(.ownDarkGray).bold()
                 }
+                .ownButtonStyle()
+//                .tint(.white)
+//                .buttonStyle(.borderedProminent)
+                Button("Already have account?") {
+                    withAnimation {
+                        authViewModel.flow = .login
+                    }
+                }
+                .foregroundStyle(.beerYellow)
+                .padding(.top, 8)
+                Spacer()
+                Spacer()
             }
-            .padding(.vertical, 8)
-            Spacer()
-            Spacer()
+            .padding(20)
         }
-        .padding(20)
+        .background(.ppDark)
         .alert("Wrong password", isPresented: $alertOn) {
             Text("Try again")
         } message: {
