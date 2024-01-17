@@ -9,7 +9,6 @@ import Foundation
 import Observation
 
 @Observable
-
 class ItemsViewModel {
     var drinks = [Drink]()
     var rewards = [Reward]()
@@ -23,6 +22,9 @@ class ItemsViewModel {
             print("Cannot initialize Items from constructor")
         }
     }
+    /**
+     Checks an returns which type is refered to the itemID
+     */
     func getItem(for itemID: UUID) -> Item {
         if let isDrink = drinks.first(where: { $0.id == itemID }) {
             return isDrink
@@ -30,6 +32,9 @@ class ItemsViewModel {
             return rewards.first(where: { $0.id == itemID })!
         }
     }
+    /**
+     Fetch de DB to get the items in Firestore
+     */
     private func fetchDBItems() throws{
         Task {
             do {

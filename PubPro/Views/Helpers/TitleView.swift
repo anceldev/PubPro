@@ -9,7 +9,13 @@ import SwiftUI
 
 struct TitleView: View {
     let title: String
-    let hasItems: Bool = false
+//    let hasItems: Bool = false
+    let hasTable: Bool
+    init(title: String, hasTable: Bool = true) {
+        self.title = title
+        self.hasTable = hasTable
+    }
+
     
     var bars: some View {
         VStack {
@@ -36,12 +42,15 @@ struct TitleView: View {
                 }
                 bars
             }
-            HStack {
-                Text("ITEM")
-                Spacer()
-                Text("POINTS")
+            if hasTable {
+                HStack {
+                    
+                    Text("ITEM")
+                    Spacer()
+                    Text("POINTS")
+                }
+                .font(.custom("RobotoCondensed-Bold", size: 14))
             }
-            .font(.custom("RobotoCondensed-Bold", size: 14))
         }
         .foregroundStyle(.ppDark)
     }

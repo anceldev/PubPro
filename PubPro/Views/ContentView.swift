@@ -8,34 +8,34 @@
 import SwiftUI
 
 struct ContentView: View {
-  var body: some View {
-    TabView {
-      Text("First Tab")
-        .tabItem {
-          Image(systemName: "1.square.fill")
-          Text("First")
+    
+    @State private var showToast = false
+    @State private var emailSent = false
+    var body: some View {
+        VStack {
+            Button("Send") {
+                withAnimation {
+                    emailSent.toggle()
+                    showToast.toggle()
+                }
+            }
         }
-        .tag(1)
-        .toolbarBackground(.hidden, for: .tabBar)
-
-      Text("Second Tab")
-        .tabItem {
-          Image(systemName: "2.square.fill")
-          Text("Second")
-        }
-        .tag(2)
-        .toolbarBackground(.visible, for: .tabBar)
-        .toolbarBackground(Color.orange.opacity(0.8), for: .tabBar)
-
-      Text("Third Tab")
-        .tabItem {
-          Image(systemName: "3.square.fill")
-          Text("Third")
-        }
-        .tag(3)
+        .toast(toastView: Toast(dataModel: ToastDataModel(title: "Success", image: "checkmark"), show: $showToast), show: $showToast)
     }
-  }
 }
+//    private func writeDB() {
+//        Task {
+//            
+//            let drinksOK = await Repositories.updateItemsDB(for: Drink.drinks, collection: "drinksDataBase")
+//            if drinksOK {
+//                let rewardsOK = await Repositories.updateItemsDB(for: Reward.rewards, collection: "rewardsDataBase")
+//                if rewardsOK {
+//                    print("Database updated")
+//                }
+//            }
+//        }
+//    }
+//}
 
 #Preview {
     ContentView()

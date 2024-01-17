@@ -20,7 +20,7 @@ struct Profile: View {
     var body: some View {
         VStack {
             VStack {
-                TitleView(title: "Profile")
+                TitleView(title: "Profile", hasTable: false)
             }
             .padding(33)
             VStack{

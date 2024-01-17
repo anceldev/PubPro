@@ -13,6 +13,9 @@ import FirebaseFirestoreSwift
 class Repositories {
     static let docReference = Firestore.firestore()
     
+    /**
+     Fetch user document
+     */
     static func fetchUser(id: String) async throws -> User {
         do {
             let user = try await docReference.collection("users_v1.1").document(id).getDocument(as: User.self)
@@ -82,6 +85,9 @@ class Repositories {
             try! document.data(as: Reward.self)
         }
     }
+    /**
+     Update items in the DB
+     */
     static func updateItemsDB<T:Item>(for items: [T], collection: String) -> Bool {
         let ref = docReference.collection(collection)
         for item in items {

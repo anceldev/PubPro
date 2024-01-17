@@ -21,11 +21,13 @@ struct AuthenticatedView: View {
                 VStack {
                     Spacer()
                     VStack {
+                        
                         VStack(alignment: .center) {
                             Text("PubPro")
                                 .font(.custom("Styleturn", size: 80))
                                 .padding(.bottom, 70)
                                 .foregroundStyle(.beerOrange)
+                                .foregroundStyle(.green)
                             Text("Welcome to PubPro, the app where you can accumulate points in your favourte pub and access to incredible rewards")
                                 .font(.custom("RobotoCondensed-Light", size: 25))
                                 .lineSpacing(8)
@@ -47,6 +49,10 @@ struct AuthenticatedView: View {
                 MainView()
 //                    .environment(authVM)
             }
+        }
+        .onAppear {
+            print("Appear")
+            print(viewModel.authenticationState)
         }
         .background(.ppDark)
         .sheet(isPresented: $loginScreen) {

@@ -52,7 +52,7 @@ struct ScannerView: View {
         VStack {
             VStack {
                 VStack {
-                    TitleView(title: "Scanner")
+                    TitleView(title: "Scanner", hasTable: false)
                 }
                 .padding(33)
                 

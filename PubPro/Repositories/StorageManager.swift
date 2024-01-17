@@ -43,7 +43,6 @@ class StorageManager {
         }
         return true
     }
-    
     /**
      Downloads users image avatar
      */
@@ -65,7 +64,6 @@ class StorageManager {
             }
         }
     }
-    
     /**
      Deletes an avatar image from Storage
      */

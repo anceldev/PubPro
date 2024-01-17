@@ -36,5 +36,5 @@ enum Role: String, Codable {
     case admin = "Admin"
 }
 extension User {
-    static var empty = User(name: "Username", movements: [Movement(itemID: Drink.drinks[0].id, date: .now)])
+    static var empty = User(name: "Username", movements: [])
 }

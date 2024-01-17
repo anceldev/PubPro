@@ -48,8 +48,6 @@ struct SignUpView: View {
                         .foregroundStyle(.ownDarkGray).bold()
                 }
                 .ownButtonStyle()
-//                .tint(.white)
-//                .buttonStyle(.borderedProminent)
                 Button("Already have account?") {
                     withAnimation {
                         authViewModel.flow = .login

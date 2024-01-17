@@ -24,7 +24,9 @@ class UserViewModel{
     init(){
         registerAuthStateHandler()
     }
-    
+    /**
+     Suscribe to get a listener referenced to user's document
+     */
     func suscribe() {
         guard let docID = user.id else { return }
         let ref = Firestore.firestore().collection("users_v1.1").document(docID)

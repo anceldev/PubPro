@@ -23,7 +23,7 @@ struct SettingsView: View {
         VStack {
             VStack {
                 VStack {
-                    TitleView(title: "Settings")
+                    TitleView(title: "Settings", hasTable: false)
                 }
                 .padding(33)
                 VStack {
@@ -48,9 +48,13 @@ struct SettingsView: View {
                 }
                 .padding(.horizontal, 15)
                 Spacer()
-                Text("Update your profile data:")
-                TextField("Username", text: $userName)
-                Button("Update", action: updateProfileData)
+                VStack {
+                    Text("Update your username:")
+                    TextField("Username", text: $userName, prompt: Text("New username"))
+                        .ownTfStyle()
+                }
+                .padding(15)
+                Button("Update changes", action: updateProfileData)
                     .buttonStyle(.borderedProminent)
                     .confirmationDialog("Change profile", isPresented: $confirmChanges, actions: {
                         Button("Ok") {
@@ -64,6 +68,7 @@ struct SettingsView: View {
                 Spacer()
                 Button("SignOut", action: signOutAccount)
                     .foregroundStyle(.red.opacity(0.7))
+                Spacer()
             }
         }
         .onAppear(perform: getAvatarImage)
@@ -79,11 +84,13 @@ struct SettingsView: View {
         authViewModel.signOut()
     }
     private func getAvatarImage() {
-        StorageManager.downloadAvatar(uidUser: userViewModel.user.id!) { image in
-            if let uiImage = image {
-                self.image = uiImage
-            } else {
-                print("Cant use image")
+        if let userID = userViewModel.user.id {
+            StorageManager.downloadAvatar(uidUser: userID) { image in
+                if let uiImage = image {
+                    self.image = uiImage
+                } else {
+                    print("Cant use image")
+                }
             }
         }
     }
@@ -94,6 +101,8 @@ struct SettingsView: View {
         if nameRequest && photoRequest {
             self.confirmChanges = true
             userViewModel.user.name = userName // Update name locally for this sesion
+        } else {
+            print(nameRequest)
         }
     }
 }

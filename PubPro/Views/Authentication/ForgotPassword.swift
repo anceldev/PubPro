@@ -29,7 +29,11 @@ struct ForgotPassword: View {
                     .ownTfStyle()
                     .padding(.bottom, 8)
                 
-                Button(action: recoverPassword, label: {
+                Button(action: {
+                    if !email.isEmpty {
+                        resetPassword()
+                    }
+                }, label: {
                     Text("Send email")
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
@@ -50,9 +54,21 @@ struct ForgotPassword: View {
         }
         .background(.ppDark)
     }
-    func recoverPassword() {
+    func resetPassword() {
+        Task {
+            do {
+                let emailSended = try await authViewModel.sendResetPasswordEmail(for: email)
+                    if emailSended == true {
+                        print("Email sended")
+                        dismiss()
+                    }
+                    else {
+                        print("Cant send Email now")
+                    }
+            }
+        }
         print("Call to recover password function.")
-        dismiss()
+//        dismiss()
     }
 }
 

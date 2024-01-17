@@ -58,6 +58,7 @@
 		B4E505432B3209F600E8BE1F /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E505422B3209F600E8BE1F /* AuthenticationView.swift */; };
 		B4E505462B321BA200E8BE1F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B4E505452B321BA200E8BE1F /* GoogleSignIn */; };
 		B4E505482B321BA200E8BE1F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B4E505472B321BA200E8BE1F /* GoogleSignInSwift */; };
+		B4E9F5CF2B58770000067AE0 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5CE2B58770000067AE0 /* Toast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		B4BEBCAE2B30EDB40081C93C /* AuthenticatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedView.swift; sourceTree = "<group>"; };
 		B4E505422B3209F600E8BE1F /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		B4E5054B2B321C6500E8BE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B4E9F5CE2B58770000067AE0 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +136,7 @@
 				B46120EF2B13E31B000EBC4D /* ContentView.swift */,
 				B44C6FE22B2A31B000C8995C /* Home.swift */,
 				B49583182B3238C7009DAAAB /* MainView.swift */,
-				B45DF7C42B4EB369005519B4 /* HelperViews */,
+				B45DF7C42B4EB369005519B4 /* Helpers */,
 				B4BEBCAA2B30E7F80081C93C /* Profile.swift */,
 				B49583202B323FEE009DAAAB /* ScannerView.swift */,
 				B49583242B32416B009DAAAB /* HistoryView.swift */,
@@ -187,15 +189,16 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
-		B45DF7C42B4EB369005519B4 /* HelperViews */ = {
+		B45DF7C42B4EB369005519B4 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				B47C40BD2B4C3CCB00B06D2C /* TitleView.swift */,
 				B41AA9242B4FECFA00C2F3CA /* Modifiers.swift */,
 				B47C40CC2B4C70DB00B06D2C /* ItemRow.swift */,
 				B480D3862B4F14D500D17590 /* ImagePicker.swift */,
+				B4E9F5CE2B58770000067AE0 /* Toast.swift */,
 			);
-			path = HelperViews;
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		B45DF7C52B4EB519005519B4 /* Frameworks */ = {
@@ -392,6 +395,7 @@
 				B480D3872B4F14D500D17590 /* ImagePicker.swift in Sources */,
 				B44C6FE52B2A32E000C8995C /* SignInView.swift in Sources */,
 				B44C6FF42B2A42A900C8995C /* AuthenticationViewModel.swift in Sources */,
+				B4E9F5CF2B58770000067AE0 /* Toast.swift in Sources */,
 				B495831D2B3239D4009DAAAB /* RewardsList.swift in Sources */,
 				B4E505432B3209F600E8BE1F /* AuthenticationView.swift in Sources */,
 				B480D3852B4F0BB000D17590 /* StorageManager.swift in Sources */,
@@ -530,6 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = PubPro/PubPro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -538,6 +543,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PubPro/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR codes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -562,6 +568,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = PubPro/PubPro.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -570,6 +577,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PubPro/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need the camera to scan QR codes";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -40,12 +40,13 @@ final class AuthenticationViewModel: ObservableObject{
     @Published var email = ""
     @Published var password = ""
     @Published var confirmPassword = ""
-    
-    @Published var flow: AuthenticationFlow = .login
+//    /Users/anceldev/Desktop/DAM project/PubPro/PubPro/ViewModels/AuthenticationViewModel.swift
 
+    @Published var flow: AuthenticationFlow = .login
+    
     @Published var isValid = false
     @Published var authenticationState: AuthenticationState = .unauthenticated
-
+    
     @Published var errorMessage = ""
     @Published var user: FirebaseAuth.User?
     @Published var displayName = ""
@@ -59,7 +60,8 @@ final class AuthenticationViewModel: ObservableObject{
      */
     init() {
         registerAuthStateHandler()
-//        verifySignInWithAppleAuthenticationState()
+        //        verifySignInWithAppleAuthenticationState()
+
     }
     /**
      Handles the Authentication State.
@@ -152,6 +154,19 @@ final class AuthenticationViewModel: ObservableObject{
             print(error)
             errorMessage = error.localizedDescription
             fatalError("Can't sign out")
+        }
+    }
+    /**
+     Send reset password email
+     */
+    func sendResetPasswordEmail(for email: String) async throws -> Bool {
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            return true
+        }
+        catch {
+            print("Error sending password reset request")
+            return false
         }
     }
 }
@@ -301,40 +316,39 @@ extension AuthenticationViewModel {
 // MARK: Utilities for Apple authentication
 extension AuthenticationViewModel {
     /**
-     Random nonce string generator function
+     Random nonce string generator function adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
      */
-    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
     private func randomNonceString(length: Int = 32) -> String {
-      precondition(length > 0) // Test the condition to make progress
-      let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
-      var result = ""
-      var remainingLength = length
-
-      while remainingLength > 0 {
-        let randoms: [UInt8] = (0 ..< 16).map { _ in
-          var random: UInt8 = 0
-          let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
-          if errorCode != errSecSuccess {
-            fatalError(
-              "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
-            )
-          }
-          return random
+        precondition(length > 0) // Test the condition to make progress
+        let charset: [Character] = Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+        
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError(
+                        "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                    )
+                }
+                return random
+            }
+            
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
         }
-
-        randoms.forEach { random in
-          if remainingLength == 0 {
-            return
-          }
-
-          if random < charset.count {
-            result.append(charset[Int(random)])
-            remainingLength -= 1
-          }
-        }
-      }
-
-      return result
+        
+        return result
     }
     /**
      SHA256 function
