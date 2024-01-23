@@ -13,8 +13,6 @@ struct Profile: View {
     
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(UserViewModel.self) var userViewModel
-    
-//    var user: User
     @State var myQR: Image?
     
     var body: some View {
@@ -52,12 +50,8 @@ struct Profile: View {
 //                }
                 
             }
-            .padding(30)
             Spacer()
-            Spacer()
-
         }
-        .padding(.top, 33)
         .background(.ppDarkWhite)
         .onAppear {
             userViewModel.suscribe()
@@ -68,11 +62,10 @@ struct Profile: View {
         authViewModel.signOut()
     }
     func generateQRCode() {
-        guard let uiImageQR = try? QRCode(string: userViewModel.user.id ?? "No image", size: CGSize(width: 400, height: 400))?.image() else {
+        guard let uiImageQR = try? QRCode(string: userViewModel.user.email, size: CGSize(width: 400, height: 400))?.image() else {
             fatalError("Can't generate QR code")
         }
         self.myQR = Image(uiImage: uiImageQR)
-//        print(userViewModel.user.id ?? "Empty user name")
     }
 }
 

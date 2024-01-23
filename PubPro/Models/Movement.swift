@@ -6,19 +6,17 @@
 //
 
 import Foundation
+import SwiftData
 
-struct Movement: Codable, Identifiable{
-    var id: UUID
-    var itemID: UUID
+@Model
+class Movement {
     var date: Date
+    var item: Item
+    var user: User?
     
-    init(id: UUID = UUID(), itemID: UUID, date: Date = .now) {
-        self.id = id
-        self.itemID = itemID
+    init(date: Date = .now, item: Item, user: User? = nil) {
         self.date = date
+        self.item = item
+        self.user = user
     }
-}
-
-extension Movement {
-//    static let empty = Movement()
 }

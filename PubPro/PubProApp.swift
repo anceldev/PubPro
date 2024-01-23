@@ -41,8 +41,8 @@ struct PubProApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                AuthenticatedView()
-//                ContentView()
+//                AuthenticatedView()
+                ContentView()
             }
         }
         .environmentObject(AuthenticationViewModel())

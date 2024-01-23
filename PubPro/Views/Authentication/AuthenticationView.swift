@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AuthenticationView: View {
     
-//    @Environment(AuthenticationViewModel.self) var authViewModel
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     
     var body: some View {

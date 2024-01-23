@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct AuthenticatedView: View {
-    
-//    @State var authVM = AuthenticationViewModel()
-//    @Environment(AuthenticationViewModel.self) var viewModel
+
     @EnvironmentObject var viewModel: AuthenticationViewModel
     @State private var loginScreen = false
     

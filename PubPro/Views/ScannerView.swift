@@ -24,7 +24,6 @@ struct ScannerView: View {
         case drinks
         case rewards
         case none
-        
         var color: Color {
             switch self {
             case .drinks:
@@ -36,7 +35,6 @@ struct ScannerView: View {
             }
         }
     }
-    
     var scannerSheet: some View {
         CodeScannerView(
             codeTypes: [.qr],
@@ -112,6 +110,11 @@ struct ScannerView: View {
             }
             .background(.ppDarkWhite)
         }
+        .onChange(of: scannedCode) {
+            if scannedCode != "" {
+                checkUser()
+            }
+        }
         .confirmationDialog("Succes", isPresented: $confirmationGivePoints) {
             Button("Ok") {
                 self.confirmationGivePoints = false
@@ -120,6 +123,23 @@ struct ScannerView: View {
             Text("The points has been given succesfully to the user")
         }
 
+    }
+    private func checkUser() {
+        print("Scanned code is: \(scannedCode)")
+        authViewModel.checkUserExistence(forEmail: scannedCode) { exists, error in
+            if let error = error {
+                print("Error checking user email: \(error.localizedDescription)")
+            }
+            else {
+                if exists {
+                    print("User exists")
+                }
+                else {
+                    print("user doesn't exists")
+                    scannedCode = ""
+                }
+            }
+        }
     }
     @ViewBuilder
     func DynamicButtonsBar<T:Item>(items: [T]) -> some View{

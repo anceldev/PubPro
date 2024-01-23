@@ -123,6 +123,7 @@ final class AuthenticationViewModel: ObservableObject{
      Update user's profile data
      */
     func userProfileChangeRequest(username: String) -> Bool {
+        if username.isEmpty { return false }
         let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
         changeRequest?.displayName = username
         // Updates change in authenticaiton profile
@@ -142,18 +143,23 @@ final class AuthenticationViewModel: ObservableObject{
         return true
     }
     /**
-     Sign out user account
+     Check if user exists with Firebase instance
      */
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            authenticationState = .authenticated
-            flow = .login
-        }
-        catch {
-            print(error)
-            errorMessage = error.localizedDescription
-            fatalError("Can't sign out")
+    func checkUserExistence(forEmail email: String, completion: @escaping (Bool, Error?) -> Void) {
+        Auth.auth().fetchSignInMethods(forEmail: email) { providers, error in
+            // Check error
+            if let error = error {
+                print(error)
+                completion(false, nil)
+            }
+            else if let providers = providers {
+                // Check providers
+                if providers.isEmpty { completion(false, nil) }
+                else { completion(true, nil) }
+            }
+            else {
+                completion(false, nil)
+            }
         }
     }
     /**
@@ -169,6 +175,22 @@ final class AuthenticationViewModel: ObservableObject{
             return false
         }
     }
+    /**
+     Sign out user account
+     */
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            authenticationState = .authenticated
+            flow = .login
+        }
+        catch {
+            print(error)
+            errorMessage = error.localizedDescription
+            fatalError("Can't sign out")
+        }
+    }
+    
 }
 
 enum AuthenticationError: Error {

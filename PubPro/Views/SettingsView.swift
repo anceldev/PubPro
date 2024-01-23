@@ -12,7 +12,7 @@ struct SettingsView: View {
     
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Binding var userViewModel: UserViewModel
-    @State var userName: String = ""
+    @State var newName: String = ""
     @State private var confirmChanges = false
     
     @State private var image = UIImage()
@@ -50,7 +50,7 @@ struct SettingsView: View {
                 Spacer()
                 VStack {
                     Text("Update your username:")
-                    TextField("Username", text: $userName, prompt: Text("New username"))
+                    TextField("Username", text: $newName, prompt: Text("New username"))
                         .ownTfStyle()
                 }
                 .padding(15)
@@ -60,7 +60,7 @@ struct SettingsView: View {
                         Button("Ok") {
                             print("Ok to confirmation dialog")
                             confirmChanges = false
-                            userName = ""
+                            newName = ""
                         }
                     }, message: {
                         Text("Your name has been updated")
@@ -95,14 +95,21 @@ struct SettingsView: View {
         }
     }
     private func updateProfileData() {
-        let nameRequest = authViewModel.userProfileChangeRequest(username: userName)
+        let nameRequest = authViewModel.userProfileChangeRequest(username: newName)
         let photoRequest = userViewModel.requestAvatarChange(uiImage: image)
         
-        if nameRequest && photoRequest {
+        if !nameRequest && !photoRequest {
+            print("No changes")
+        }
+        else {
             self.confirmChanges = true
-            userViewModel.user.name = userName // Update name locally for this sesion
-        } else {
-            print(nameRequest)
+            if nameRequest {
+                userViewModel.user.name = newName // Update name locally for this sesion
+                print("Name updated")
+            }
+            if photoRequest {
+                print("Photo updated")
+            }
         }
     }
 }

@@ -6,35 +6,31 @@
 //
 
 import Foundation
-import FirebaseFirestore
-import FirebaseFirestoreSwift
+import SwiftData
 
-struct User: Codable, Identifiable {
-    @DocumentID var id: String?
+@Model
+class User {
+    var uid: String // Firestore document reference for backup
     var name: String
     var email: String
     var phone: String
     var role: Role
-    var movements: [Movement]
-    var points: Int = 60 // Defaul 60 points for each user. This value will be overwrite when user loads iots data
-    var lastUpdateDrinks: Date? = nil
-    var lastUpdateRewards: Date? = nil
+    var points: Int
+    @Relationship(deleteRule: .cascade, inverse: \Movement.user) var movemements: [Movement]?
     
-    
-    init(name: String = "", email: String = "", phone: String = "", role: Role = .user, movements: [Movement] = []) {
+    init(uid: String = "", name: String = "", email: String = "", phone: String = "", role: Role = .user, points: Int = 60, movemements: [Movement]? = []) {
+        self.uid = uid
         self.name = name
         self.email = email
         self.phone = phone
         self.role = role
-        self.movements = movements
+        self.points = points
+        self.movemements = movemements
     }
 }
 
-/// Users role
-enum Role: String, Codable {
+enum Role: String, Codable{
     case user = "User"
     case admin = "Admin"
-}
-extension User {
-    static var empty = User(name: "Username", movements: [])
+    case superadmin = "Superadmin"
 }
