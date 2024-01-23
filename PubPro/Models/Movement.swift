@@ -12,6 +12,13 @@ import SwiftData
 final class Movement {
     @Attribute(.unique) var id: UUID
     var date: Date
+    @Relationship(deleteRule: .noAction) var item: Item
+    
+    init(id: UUID = UUID(), date: Date = .now, item: Item) {
+        self.id = id
+        self.date = date
+        self.item = item
+    }
 }
 //struct Movement: Codable, Identifiable{
 //    var id: UUID

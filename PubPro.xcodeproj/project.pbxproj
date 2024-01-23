@@ -55,6 +55,8 @@
 		B4E505432B3209F600E8BE1F /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E505422B3209F600E8BE1F /* AuthenticationView.swift */; };
 		B4E505462B321BA200E8BE1F /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B4E505452B321BA200E8BE1F /* GoogleSignIn */; };
 		B4E505482B321BA200E8BE1F /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B4E505472B321BA200E8BE1F /* GoogleSignInSwift */; };
+		B4E9F5D22B588DBE00067AE0 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5D12B588DBE00067AE0 /* UserViewModel.swift */; };
+		B4E9F5D42B588FA100067AE0 /* NewUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E9F5D32B588FA100067AE0 /* NewUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -96,6 +98,8 @@
 		B4BEBCAE2B30EDB40081C93C /* AuthenticatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedView.swift; sourceTree = "<group>"; };
 		B4E505422B3209F600E8BE1F /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		B4E5054B2B321C6500E8BE1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B4E9F5D12B588DBE00067AE0 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		B4E9F5D32B588FA100067AE0 /* NewUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +129,7 @@
 		B44C6FE02B2A318000C8995C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B4E9F5D02B588DA700067AE0 /* TestSwiftData */,
 				B4BEBCAA2B30E7F80081C93C /* Profile.swift */,
 				B46120EF2B13E31B000EBC4D /* ContentView.swift */,
 				B44C6FE22B2A31B000C8995C /* Home.swift */,
@@ -246,6 +251,15 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		B4E9F5D02B588DA700067AE0 /* TestSwiftData */ = {
+			isa = PBXGroup;
+			children = (
+				B4E9F5D12B588DBE00067AE0 /* UserViewModel.swift */,
+				B4E9F5D32B588FA100067AE0 /* NewUser.swift */,
+			);
+			path = TestSwiftData;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -360,6 +374,7 @@
 				B49583252B32416B009DAAAB /* HistoryView.swift in Sources */,
 				B44C6FE32B2A31B000C8995C /* Home.swift in Sources */,
 				B4BEBCAF2B30EDB40081C93C /* AuthenticatedView.swift in Sources */,
+				B4E9F5D42B588FA100067AE0 /* NewUser.swift in Sources */,
 				B47C40BE2B4C3CCB00B06D2C /* TitleView.swift in Sources */,
 				B47C40CD2B4C70DB00B06D2C /* ItemRow.swift in Sources */,
 				B44C6FF12B2A3BA100C8995C /* Movement.swift in Sources */,
@@ -372,6 +387,7 @@
 				B4BEBCA72B30B69A0081C93C /* Item.swift in Sources */,
 				B49583192B3238C7009DAAAB /* MainView.swift in Sources */,
 				B44C6FEF2B2A3A9A00C8995C /* User.swift in Sources */,
+				B4E9F5D22B588DBE00067AE0 /* UserViewModel.swift in Sources */,
 				B430CA622B4D3D180082BE54 /* ItemsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
