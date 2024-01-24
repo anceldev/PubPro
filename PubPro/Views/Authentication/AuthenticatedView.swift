@@ -45,6 +45,7 @@ struct AuthenticatedView: View {
                 ProgressView()
             case .authenticated:
                 MainView()
+                    .environmentObject(viewModel)
 //                    .environment(authVM)
             }
         }

@@ -11,7 +11,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @EnvironmentObject var authViewModel: AuthenticationViewModel
-    @Binding var userViewModel: UserViewModel
+//    @Binding var userViewModel: UserViewModel
     @State var newName: String = ""
     @State private var confirmChanges = false
     
@@ -84,38 +84,40 @@ struct SettingsView: View {
         authViewModel.signOut()
     }
     private func getAvatarImage() {
-        if let userID = userViewModel.user.id {
-            StorageManager.downloadAvatar(uidUser: userID) { image in
-                if let uiImage = image {
-                    self.image = uiImage
-                } else {
-                    print("Cant use image")
-                }
-            }
-        }
+//        if let userID = userViewModel.user.id {
+//            StorageManager.downloadAvatar(uidUser: userID) { image in
+//                if let uiImage = image {
+//                    self.image = uiImage
+//                } else {
+//                    print("Cant use image")
+//                }
+//            }
+//        }
     }
     private func updateProfileData() {
-        let nameRequest = authViewModel.userProfileChangeRequest(username: newName)
-        let photoRequest = userViewModel.requestAvatarChange(uiImage: image)
-        
-        if !nameRequest && !photoRequest {
-            print("No changes")
-        }
-        else {
-            self.confirmChanges = true
-            if nameRequest {
-                userViewModel.user.name = newName // Update name locally for this sesion
-                print("Name updated")
-            }
-            if photoRequest {
-                print("Photo updated")
-            }
-        }
+//        let nameRequest = authViewModel.userProfileChangeRequest(username: newName)
+//        let photoRequest = userViewModel.requestAvatarChange(uiImage: image)
+//        
+//        if !nameRequest && !photoRequest {
+//            print("No changes")
+//        }
+//        else {
+//            self.confirmChanges = true
+//            if nameRequest {
+//                userViewModel.user.name = newName // Update name locally for this sesion
+//                print("Name updated")
+//            }
+//            if photoRequest {
+//                print("Photo updated")
+//            }
+//        }
     }
 }
 
 #Preview {
-    @State var userViewModel = UserViewModel()
-    return SettingsView(userViewModel: $userViewModel)
-        .environmentObject(AuthenticationViewModel())
+//    @State var userViewModel = UserViewModel()
+//    return SettingsView(userViewModel: $userViewModel)
+//        .environmentObject(AuthenticationViewModel())
+    
+    SettingsView()
 }

@@ -51,13 +51,11 @@ final class AuthenticationViewModel: ObservableObject{
     @Published var user: FirebaseAuth.User?
     @Published var displayName = ""
     
-    //
-    private var userExists = false
-    //
-    
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     
     private var currentNonce: String?
+    
+    var isNewUser = false
     
     /**
      Constructor.
@@ -114,7 +112,7 @@ final class AuthenticationViewModel: ObservableObject{
             try await Auth.auth().createUser(withEmail: self.email, password: self.password)
             authenticationState = .authenticated
             
-            createUserDocument(email: email)
+            checkUserDocument(email: email)
             
             return true
         }
@@ -233,7 +231,7 @@ extension AuthenticationViewModel {
             print("User \(firebaseUser.uid) signed in with email \(firebaseUser.email ?? "unknown")")
             authenticationState = .authenticated
             
-            createUserDocument(email: userAuthentication.user.profile!.email)
+            checkUserDocument(email: userAuthentication.user.profile!.email)
             
             print("User is: \(firebaseUser.uid)")
             return true
@@ -281,7 +279,7 @@ extension AuthenticationViewModel {
                     do {
                         let result = try await Auth.auth().signIn(with: credential)
                         
-                        createUserDocument(email: result.user.email!)
+                        checkUserDocument(email: result.user.email!)
                         authenticationState = .authenticated
                     }
                     catch {
@@ -322,22 +320,19 @@ extension AuthenticationViewModel {
     /**
      Creates new User document in Firestore database
      */
-    func createUserDocument(email: String) {
-        let newUser = User(name: displayName, email: email, role: .user)
+    private func checkUserDocument(email: String) {
+//        let newUser = User(name: displayName, email: email, role: .user)
         guard let documentId = user?.uid else { return }
+        
         let documentRef = Firestore.firestore().collection("users_v1.1").document(documentId)
         
         documentRef.getDocument { document, error in
+            if let error = error {
+                print("Error trying fetch user's document: \(error.localizedDescription)")
+            }
             if let document = document, document.exists {
                 print("Document exists")
-            }
-            else {
-                do {
-                    try documentRef.setData(from: newUser)
-                }
-                catch {
-                    print(error.localizedDescription)
-                }
+                self.isNewUser = true
             }
         }
     }

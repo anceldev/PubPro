@@ -10,13 +10,13 @@ import SwiftUI
 
 struct ScannerView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
-    @Environment(ItemsViewModel.self) var itemsViewModel
+//    @Environment(ItemsViewModel.self) var itemsViewModel
     @State var isPresentingScanner = false
     @State var scannedCode: String = ""
     @State var confirmationGivePoints = false
     
-    let drinks: [Drink]
-    let rewards: [Reward]
+//    let drinks: [Drink]
+//    let rewards: [Reward]
     
     @State private var buttonsBar: ButtonsBar = .none
     
@@ -88,16 +88,16 @@ struct ScannerView: View {
                             .font(.title)
                             .buttonStyle(.borderedProminent)
                             
-                            VStack {
-                                switch buttonsBar {
-                                case .drinks:
-                                    DynamicButtonsBar(items: drinks)
-                                case .rewards:
-                                    DynamicButtonsBar(items: rewards)
-                                case .none:
-                                    Text("Select an Action")
-                                }
-                            }
+//                            VStack {
+//                                switch buttonsBar {
+//                                case .drinks:
+//                                    DynamicButtonsBar(items: drinks)
+//                                case .rewards:
+//                                    DynamicButtonsBar(items: rewards)
+//                                case .none:
+//                                    Text("Select an Action")
+//                                }
+//                            }
                             Spacer()
                             Button("Reset Scanner", action: resetScanner)
                         }
@@ -147,7 +147,8 @@ struct ScannerView: View {
             ForEach(items, id: \.id) { item in
                 
                 Button {
-                    self.givePoints(for: item)
+//                    self.givePoints(for: item)
+                    //
                 } label: {
                     HStack{
                         Spacer()
@@ -163,24 +164,24 @@ struct ScannerView: View {
         }
         .padding(.horizontal, 15)
     }
-    private func givePoints(for item: Item) {
-        print("Adding \(item.value) points to \(scannedCode)")
-        Task {
-            do {
-                let completed = try await Repositories.addMovement(for: item, with: scannedCode, itemsList: itemsViewModel)
-                if completed.0 {
-                    print("Movement added")
-                    self.confirmationGivePoints.toggle()
-                }
-                else {
-                    print("Something went wrong, we couldnt add the movement.")
-                }
-            }
-            catch {
-                print("Error after Repositories.addMovement")
-            }
-        }
-    }
+//    private func givePoints(for item: Item) {
+//        print("Adding \(item.value) points to \(scannedCode)")
+//        Task {
+//            do {
+//                let completed = try await Repositories.addMovement(for: item, with: scannedCode, itemsList: itemsViewModel)
+//                if completed.0 {
+//                    print("Movement added")
+//                    self.confirmationGivePoints.toggle()
+//                }
+//                else {
+//                    print("Something went wrong, we couldnt add the movement.")
+//                }
+//            }
+//            catch {
+//                print("Error after Repositories.addMovement")
+//            }
+//        }
+//    }
     private func resetScanner() {
         withAnimation {
             self.buttonsBar = .none
@@ -190,6 +191,8 @@ struct ScannerView: View {
 }
 
 #Preview {
-    ScannerView(drinks: [], rewards: [])
-        .environment(ItemsViewModel())
+//    ScannerView(drinks: [], rewards: [])
+//        .environment(ItemsViewModel())
+    ScannerView()
+//        .environment(ItemsViewModel())
 }

@@ -16,12 +16,15 @@ struct AuthenticationView: View {
             switch authViewModel.flow {
             case .login:
                 SignInView()
+                    .environmentObject(authViewModel)
 //                    .environment(authViewModel)
             case .signUp:
                 SignUpView()
+                    .environmentObject(authViewModel)
 //                    .environment(authViewModel)
             case .recoveryPassword:
                 ForgotPassword()
+                    .environmentObject(authViewModel)
 //                    .environment(authViewModel)
             }
         }

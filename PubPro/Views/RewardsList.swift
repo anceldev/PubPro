@@ -9,25 +9,26 @@ import SwiftUI
 
 struct RewardsList: View {
     
-    let rewards: [Reward]
+//    let rewards: [Reward]
     
     var body: some View {
         VStack {
-            VStack {
-                TitleView(title: "Rewards")
-            }
-            .padding(33)
-            ForEach(rewards, id: \.id) { item in
-                ItemRow(item: item)
-            }
-            .padding(.horizontal, 15)
-            .padding(.vertical, 3)
-            Spacer()
+//            VStack {
+//                TitleView(title: "Rewards")
+//            }
+//            .padding(33)
+//            ForEach(rewards, id: \.id) { item in
+//                ItemRow(item: item)
+//            }
+//            .padding(.horizontal, 15)
+//            .padding(.vertical, 3)
+//            Spacer()
         }
         .background(.ppDarkWhite)
     }
 }
 
 #Preview {
-    RewardsList(rewards: Reward.rewards)
+//    RewardsList(rewards: Reward.rewards)
+    RewardsList()
 }
