@@ -14,6 +14,11 @@ struct MainView: View {
     @State var userViewModel = UserViewModel()
     @State var itemsViewModel = ItemsViewModel()
     
+    let email: String
+    init() {
+        
+    }
+    
     var body: some View {
         TabView {
             if userViewModel.user.role == .admin {

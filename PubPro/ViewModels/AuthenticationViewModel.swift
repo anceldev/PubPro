@@ -51,6 +51,10 @@ final class AuthenticationViewModel: ObservableObject{
     @Published var user: FirebaseAuth.User?
     @Published var displayName = ""
     
+    //
+    private var userExists = false
+    //
+    
     private var authStateHandler: AuthStateDidChangeListenerHandle?
     
     private var currentNonce: String?
@@ -109,7 +113,9 @@ final class AuthenticationViewModel: ObservableObject{
         do {
             try await Auth.auth().createUser(withEmail: self.email, password: self.password)
             authenticationState = .authenticated
+            
             createUserDocument(email: email)
+            
             return true
         }
         catch {
@@ -143,7 +149,7 @@ final class AuthenticationViewModel: ObservableObject{
         return true
     }
     /**
-     Check if user exists with Firebase instance
+     Check if user exists with Firebase instance. Used when QR email code is scanned
      */
     func checkUserExistence(forEmail email: String, completion: @escaping (Bool, Error?) -> Void) {
         Auth.auth().fetchSignInMethods(forEmail: email) { providers, error in
@@ -274,6 +280,7 @@ extension AuthenticationViewModel {
                 Task {
                     do {
                         let result = try await Auth.auth().signIn(with: credential)
+                        
                         createUserDocument(email: result.user.email!)
                         authenticationState = .authenticated
                     }
