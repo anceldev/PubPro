@@ -1,0 +1,15 @@
+{
+  "originHash" : "ab73fa6ac53587c66cf4f863d8fd07613fc9ee75cfb98e95001b0d82b1831db1",
+  "pins" : [
+    {
+      "identity" : "pubproshareddto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/anceldev/PubProSharedDTO.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4751e8561cea99670908d06bb6efa6501f286034"
+      }
+    }
+  ],
+  "version" : 3
+}

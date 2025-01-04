@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		B47C5A192C6F6ED0008FA012 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47C5A182C6F6ED0008FA012 /* ContentView.swift */; };
 		B47C5A1B2C6F6ED1008FA012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B47C5A1A2C6F6ED1008FA012 /* Assets.xcassets */; };
 		B47C5A1E2C6F6ED1008FA012 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B47C5A1D2C6F6ED1008FA012 /* Preview Assets.xcassets */; };
+		B489C12B2D286A8500786670 /* PubProSharedDTO in Frameworks */ = {isa = PBXBuildFile; productRef = B489C12A2D286A8500786670 /* PubProSharedDTO */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,11 +22,21 @@
 		B47C5A1D2C6F6ED1008FA012 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B446BB832D28616300AAF77B /* Client */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Client; sourceTree = "<group>"; };
+		B446BB892D28665900AAF77B /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+		B489C12C2D286C3200786670 /* Extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Extensions; sourceTree = "<group>"; };
+		B489C1382D2870D800786670 /* Views */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Views; sourceTree = "<group>"; };
+		B489C1C02D28892900786670 /* Models */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Models; sourceTree = "<group>"; };
+		B489C1CC2D2890BD00786670 /* Utils */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Utils; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		B47C5A102C6F6ED0008FA012 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B489C12B2D286A8500786670 /* PubProSharedDTO in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,10 +62,8 @@
 		B47C5A152C6F6ED0008FA012 /* PubPro */ = {
 			isa = PBXGroup;
 			children = (
-				B47C5A162C6F6ED0008FA012 /* PubProApp.swift */,
-				B47C5A182C6F6ED0008FA012 /* ContentView.swift */,
-				B47C5A1A2C6F6ED1008FA012 /* Assets.xcassets */,
-				B47C5A1C2C6F6ED1008FA012 /* Preview Content */,
+				B47C5A242C6F6F30008FA012 /* App */,
+				B47C5A262C6F6F54008FA012 /* Resources */,
 			);
 			path = PubPro;
 			sourceTree = "<group>";
@@ -65,6 +74,30 @@
 				B47C5A1D2C6F6ED1008FA012 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B47C5A242C6F6F30008FA012 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B489C1CC2D2890BD00786670 /* Utils */,
+				B489C1382D2870D800786670 /* Views */,
+				B489C12C2D286C3200786670 /* Extensions */,
+				B446BB892D28665900AAF77B /* ViewModels */,
+				B446BB832D28616300AAF77B /* Client */,
+				B47C5A162C6F6ED0008FA012 /* PubProApp.swift */,
+				B47C5A182C6F6ED0008FA012 /* ContentView.swift */,
+				B489C1C02D28892900786670 /* Models */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		B47C5A262C6F6F54008FA012 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B47C5A1C2C6F6ED1008FA012 /* Preview Content */,
+				B47C5A1A2C6F6ED1008FA012 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,7 +115,18 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				B446BB832D28616300AAF77B /* Client */,
+				B446BB892D28665900AAF77B /* ViewModels */,
+				B489C12C2D286C3200786670 /* Extensions */,
+				B489C1382D2870D800786670 /* Views */,
+				B489C1C02D28892900786670 /* Models */,
+				B489C1CC2D2890BD00786670 /* Utils */,
+			);
 			name = PubPro;
+			packageProductDependencies = (
+				B489C12A2D286A8500786670 /* PubProSharedDTO */,
+			);
 			productName = PubPro;
 			productReference = B47C5A132C6F6ED0008FA012 /* PubPro.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +155,9 @@
 				Base,
 			);
 			mainGroup = B47C5A0A2C6F6ED0008FA012;
+			packageReferences = (
+				B489C1292D286A8500786670 /* XCRemoteSwiftPackageReference "PubProSharedDTO" */,
+			);
 			productRefGroup = B47C5A142C6F6ED0008FA012 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -271,7 +318,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PubPro/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = PubPro/Resources;
 				DEVELOPMENT_TEAM = 5VZ6Q8DGLP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -300,7 +347,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PubPro/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = PubPro/Resources;
 				DEVELOPMENT_TEAM = 5VZ6Q8DGLP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -344,6 +391,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B489C1292D286A8500786670 /* XCRemoteSwiftPackageReference "PubProSharedDTO" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/anceldev/PubProSharedDTO.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B489C12A2D286A8500786670 /* PubProSharedDTO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B489C1292D286A8500786670 /* XCRemoteSwiftPackageReference "PubProSharedDTO" */;
+			productName = PubProSharedDTO;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B47C5A0B2C6F6ED0008FA012 /* Project object */;
 }
